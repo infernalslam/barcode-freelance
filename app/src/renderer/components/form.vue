@@ -22,6 +22,12 @@
 
       <div class="hero-body">
         <div class="container">
+
+
+          <table-view v-if="state"/>
+
+
+
         </div>
       </div>
     </section>
@@ -30,13 +36,20 @@
 
 <script>
 /* eslint-disable */
+import tableView from './tableView'
 import { mapActions, mapGetters } from 'vuex'
 export default {
   name: 'form',
+  components: {
+    tableView
+  },
   data () {
     return {
-      data: ''
+      data: '',
+      state: false
     }
+  },
+  mounted () {
   },
   methods: {
     onFileChange (e) {
@@ -46,6 +59,7 @@ export default {
       reader.onload = (event) => {
         vm.data = vm.CSV2JSON(reader.result)
         vm.$store.dispatch('saveData', vm.data)
+        if (vm.data) vm.state = true
         // console.log('this.data : ', vm.data)
       }
       reader.readAsText(file)
