@@ -12,10 +12,7 @@
 
                 <div class="file-input-wrapper">
                   <label class="file-input-button">อัปเดตฐานข้อมูล <input type="file" @change="onFileChange" /> </label>
-                  <!-- <input type="file" name="image" /> -->
                 </div>
-
-                <!-- <router-link to="/" class="button is-success is-focused" style="color: #fff;" @click="update()"> <b>อัปเดตฐานข้อมูล</b></router-link> -->
               </span>
             </div>
           </div>
@@ -25,12 +22,6 @@
 
       <div class="hero-body">
         <div class="container">
-          <h1 class="title">
-            Full Height title
-          </h1>
-          <h2 class="subtitle">
-            Full Height subtitle
-          </h2>
         </div>
       </div>
     </section>
@@ -38,23 +29,60 @@
 </template>
 
 <script>
+/* eslint-disable */
+import { mapActions, mapGetters } from 'vuex'
 export default {
   name: 'form',
+  data () {
+    return {
+      data: ''
+    }
+  },
   methods: {
     onFileChange (e) {
       let vm = this
       let reader = new FileReader()
       let file = e.target.files[0]
       reader.onload = (event) => {
-        vm.parseCSV(reader.result)
+        vm.data = vm.CSV2JSON(reader.result)
+        vm.$store.dispatch('saveData', vm.data)
+        // console.log('this.data : ', vm.data)
       }
       reader.readAsText(file)
     },
-    parseCSV (csv) {
-      let newLine = (csv.indexOf('\n') > -1) ? '\n' : '\r'
-      let lines = csv.split(newLine)
-      let headers = lines[0].split(',')
-      console.log('headers: ', headers)
+    CSV2JSON (csv) {
+      var array = this.CSVToArray(csv)
+      var objArray = []
+      for (var i = 1; i < array.length; i++) {
+        objArray[i - 1] = {}
+        for (var k = 0; k < array[0].length && k < array[i].length; k++) {
+          var key = array[0][k]
+          objArray[i - 1][key] = array[i][k]
+        }
+      }
+      var json = JSON.stringify(objArray)
+      var str = json.replace(/},/g, "},\r\n")
+      return str
+    },
+    CSVToArray (strData, strDelimiter) {
+      strDelimiter = (strDelimiter || ",");
+      var objPattern = new RegExp(("(\\" + strDelimiter + "|\\r?\\n|\\r|^)" + "(?:\"([^\"]*(?:\"\"[^\"]*)*)\"|" + "([^\"\\" + strDelimiter + "\\r\\n]*))"), "gi");
+      var arrData = [[]]
+      var arrMatches = null
+      while (arrMatches = objPattern.exec(strData)) {
+          var strMatchedDelimiter = arrMatches[1];
+          if (strMatchedDelimiter.length && (strMatchedDelimiter != strDelimiter)) {
+              arrData.push([]);
+          }
+          if (arrMatches[2]) {
+              var strMatchedValue = arrMatches[2].replace(
+              new RegExp("\"\"", "g"), "\"");
+          } else {
+              var strMatchedValue = arrMatches[3];
+          }
+          arrData[arrData.length - 1].push(strMatchedValue);
+      }
+      return (arrData);
     }
   }
 }

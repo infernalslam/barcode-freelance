@@ -5,12 +5,20 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-    number: 0
+    data: ''
   },
   getters: {
     number: state => state.number
   },
-  actions: {},
-  mutations: {},
+  actions: {
+    saveData (context, payload) {
+      context.commit('saveData', payload)
+    }
+  },
+  mutations: {
+    saveData (state, payload) {
+      state.data = JSON.parse(payload)
+    }
+  },
   strict: process.env.NODE_ENV !== 'production'
 })
