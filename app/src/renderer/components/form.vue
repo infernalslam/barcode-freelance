@@ -11,7 +11,7 @@
                 <router-link to="/" class="button is-danger is-focused" style="color: #fff;"> <b>กลับไปหน้าเเรก</b></router-link> &nbsp&nbsp
 
                 <div class="file-input-wrapper">
-                  <label class="file-input-button">อัปเดตฐานข้อมูล <input type="file" name="image" /> </label>
+                  <label class="file-input-button">อัปเดตฐานข้อมูล <input type="file" @change="onFileChange" /> </label>
                   <!-- <input type="file" name="image" /> -->
                 </div>
 
@@ -41,7 +41,21 @@
 export default {
   name: 'form',
   methods: {
-    update () {}
+    onFileChange (e) {
+      let vm = this
+      let reader = new FileReader()
+      let file = e.target.files[0]
+      reader.onload = (event) => {
+        vm.parseCSV(reader.result)
+      }
+      reader.readAsText(file)
+    },
+    parseCSV (csv) {
+      let newLine = (csv.indexOf('\n') > -1) ? '\n' : '\r'
+      let lines = csv.split(newLine)
+      let headers = lines[0].split(',')
+      console.log('headers: ', headers)
+    }
   }
 }
 </script>
