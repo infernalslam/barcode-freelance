@@ -7,9 +7,13 @@ import App from './App'
 import routes from './routes'
 import store from './vuex/store'
 
+import Buefy from 'buefy'
+import 'buefy/lib/buefy.css'
+
 Vue.use(Electron)
 Vue.use(Resource)
 Vue.use(Router)
+Vue.use(Buefy)
 Vue.config.debug = true
 
 const router = new Router({
