@@ -23,6 +23,9 @@ export default new Vuex.Store({
     },
     covertHeaders (context) {
       context.commit('covertHeaders')
+    },
+    edit (context, payload) {
+      context.commit('edit', payload)
     }
   },
   mutations: {
@@ -60,6 +63,11 @@ export default new Vuex.Store({
         arr.push({ id: Object.keys(state.data[0])[i] })
       }
       state.covertHeaders = arr
+    },
+    edit (state, payload) {
+      let index = state.covertSource.findIndex(i => i.id2 === payload.id2)
+      state.covertSource[index] = payload
+      console.log(state.covertSource[index])
     }
   },
   strict: process.env.NODE_ENV !== 'production'
