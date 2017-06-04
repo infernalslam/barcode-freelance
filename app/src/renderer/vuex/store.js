@@ -26,6 +26,9 @@ export default new Vuex.Store({
     },
     edit (context, payload) {
       context.commit('edit', payload)
+    },
+    addNewDataVuex (context, payload) {
+      context.commit('addNewDataVuex', payload)
     }
   },
   mutations: {
@@ -68,6 +71,21 @@ export default new Vuex.Store({
       let index = state.covertSource.findIndex(i => i.id2 === payload.id2)
       state.covertSource[index] = payload
       console.log(state.covertSource[index])
+    },
+    addNewDataVuex (state, payload) {
+      let data = {
+        id1: payload['ศูนย์ต้นทุน'],
+        id2: payload['เลขที่สินค้าคงคลัง'],
+        id3: payload['สินทรัพย์'],
+        id4: payload['คำอธิบายของสินทรัพย์'],
+        id5: payload['เลขที่ผลิตภัณฑ์'],
+        id6: payload['วันที่โอนเป็นทุน'],
+        id7: payload['มูลค่าที่ได้มา'],
+        id8: payload['ค่าเสื่อมสะสม'],
+        id9: payload['วิธีการที่ได้มา']
+      }
+      console.log('payload ', data)
+      state.covertSource.push(data)
     }
   },
   strict: process.env.NODE_ENV !== 'production'

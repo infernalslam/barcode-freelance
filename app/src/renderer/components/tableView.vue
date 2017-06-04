@@ -113,12 +113,14 @@ export default {
     ...mapActions([
       'covertSource',
       'covertHeaders',
-      'editData'
+      'editData',
+      'addNewDataVuex'
     ]),
     edit (src) {
       this.editData = src
       this.place = src
       this.show = true
+      console.log(src)
     },
     addEdit (editData) {
       this.$store.dispatch('edit', editData)
@@ -138,6 +140,8 @@ export default {
         'วิธีการที่ได้มา': this.addNewData.id9
       }
       console.log(data)
+      this.$store.dispatch('addNewDataVuex', data)
+      this.add = false
     }
   },
   computed: {
