@@ -90,6 +90,7 @@ export default {
     },
     addEdit (editData) {
       this.$store.dispatch('edit', editData)
+      this.show = false
     }
   },
   computed: {
