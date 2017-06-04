@@ -1,11 +1,14 @@
 <template lang="html">
 <div>
 
+<a class="button is-success">เพิ่มข้อมูล</a>
 
   <table class="table">
     <thead>
     <tr>
       <th v-for="h in covertHeaders">  {{ h.id }} </th>
+      <th></th>
+      <th></th>
     </tr>
   </thead>
   <tbody>
@@ -19,6 +22,8 @@
       <td>{{ src.id7 }}</td>
       <td>{{ src.id8 }}</td>
       <td>{{ src.id9 }}</td>
+      <td><a class="button is-info">แก้ไขข้อมูล</a></td>
+      <td><a class="button is-danger">ลบ</a></td>
     </tr>
   </tbody>
   </table>
