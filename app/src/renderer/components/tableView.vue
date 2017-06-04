@@ -1,7 +1,7 @@
 <template lang="html">
 <div>
 
-<a class="button is-success">เพิ่มข้อมูล</a>
+<a class="button is-success" @click="add  = true">เพิ่มข้อมูล</a>
 
   <table class="table">
     <thead>
@@ -61,6 +61,36 @@
   <!-- modal -->
 
 
+
+  <div class="modal" :class=" {'is-active' : add} ">
+  <div class="modal-background"></div>
+  <div class="modal-card">
+    <header class="modal-card-head">
+      <p class="modal-card-title">เพิ่มข้อมูล</p>
+      <button class="delete" @click="add = false"></button>
+    </header>
+    <section class="modal-card-body">
+      <div class="content">
+        <input type="text" placeholder="ศูนย์ต้นทุน" v-model="addNewData.id1"> <br>
+        <input type="text" placeholder="เลขที่สินค้าคงคลัง" v-model="addNewData.id2"> <br>
+        <input type="text" placeholder="สินทรัพย์" v-model="addNewData.id3"> <br>
+        <input type="text" placeholder="คำอธิบายของสินทรัพย์" v-model="addNewData.id4"> <br>
+        <input type="text" placeholder="เลขที่ผลิตภัณฑ์" v-model="addNewData.id5"> <br>
+        <input type="text" placeholder="วันที่โอนเป็นทุน" v-model="addNewData.id6"> <br>
+        <input type="text" placeholder="มูลค่าที่ได้มา" v-model="addNewData.id7"> <br>
+        <input type="text" placeholder="ค่าเสื่อมสะสม" v-model="addNewData.id8"> <br>
+        <input type="text" placeholder="วิธีการที่ได้มา" v-model="addNewData.id9"> <br>
+      </div>
+    </section>
+    <footer class="modal-card-foot">
+      <a class="button is-success" @click="addDataStore()">ยืนยัน</a>
+      <a class="button" @click="add = false">ยกเลิก</a>
+    </footer>
+  </div>
+  </div>
+
+
+
 </div>
 </template>
 
@@ -74,7 +104,9 @@ export default {
       sourceData: [],
       show: false,
       editData: {},
-      place: {}
+      place: {},
+      add: false,
+      addNewData: {}
     }
   },
   methods: {
@@ -90,7 +122,11 @@ export default {
     },
     addEdit (editData) {
       this.$store.dispatch('edit', editData)
+      this.editData = {}
       this.show = false
+    },
+    addDataStore () {
+      console.log(this.addNewData)
     }
   },
   computed: {
