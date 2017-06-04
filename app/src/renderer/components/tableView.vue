@@ -126,7 +126,18 @@ export default {
       this.show = false
     },
     addDataStore () {
-      console.log(this.addNewData)
+      let data = {
+        'ศูนย์ต้นทุน': this.addNewData.id1,
+        'เลขที่สินค้าคงคลัง': this.addNewData.id2,
+        'สินทรัพย์': this.addNewData.id3,
+        'คำอธิบายของสินทรัพย์': this.addNewData.id4,
+        'เลขที่ผลิตภัณฑ์': this.addNewData.id5,
+        'วันที่โอนเป็นทุน': this.addNewData.id6,
+        'มูลค่าที่ได้มา': this.addNewData.id7,
+        'ค่าเสื่อมสะสม': this.addNewData.id8,
+        'วิธีการที่ได้มา': this.addNewData.id9
+      }
+      console.log(data)
     }
   },
   computed: {
