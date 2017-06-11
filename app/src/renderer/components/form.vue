@@ -57,6 +57,7 @@ export default {
       let reader = new FileReader()
       let file = e.target.files[0]
       reader.onload = (event) => {
+        // console.log(reader.result)
         vm.data = vm.CSV2JSON(reader.result)
         vm.$store.dispatch('saveData', vm.data)
         if (vm.data) vm.state = true

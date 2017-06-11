@@ -3,11 +3,32 @@ import Vuex from 'vuex'
 
 Vue.use(Vuex)
 
+// function CSV
+function getCSV (JSONData) {
+  /* eslint-disable */
+  var arrData = typeof JSONData !== 'object' ? JSON.parse(JSONData) : JSONData
+  var CSV = 'ศูนย์ต้นทุน,เลขที่สินค้าคงคลัง,สินทรัพย์,คำอธิบายของสินทรัพย์,เลขที่ผลิตภัณฑ์,วันที่โอนเป็นทุน,มูลค่าที่ได้มา,ค่าเสื่อมสะสม,วิธีการที่ได้มา' + '\r\n'
+  for (var i = 0; i < arrData.length; i++) {
+    var row = ''
+    for (var index in arrData[i]) {
+      row += '"' + arrData[i][index] + '",'
+    }
+    row.slice(0, row.length - 1)
+    CSV += row + '\r\n'
+  }
+  // console.log('JSONData: ', CSV)
+  var csvContent = "data:text/csv;charset=utf-8,"
+  csvContent += CSV
+  var encodedUri = encodeURI(csvContent)
+  window.open(encodedUri)
+}
+
 export default new Vuex.Store({
   state: {
     data: '',
     covertSource: [],
-    covertHeaders: []
+    covertHeaders: [],
+    totalExcel: []
   },
   getters: {
     data: state => state.data,
@@ -29,6 +50,12 @@ export default new Vuex.Store({
     },
     addNewDataVuex (context, payload) {
       context.commit('addNewDataVuex', payload)
+    },
+    delTableData (context, payload) {
+      context.commit('delTableData', payload)
+    },
+    downloadFunction (context) {
+      context.commit('downloadFunction')
     }
   },
   mutations: {
@@ -86,6 +113,32 @@ export default new Vuex.Store({
       }
       console.log('payload ', data)
       state.covertSource.push(data)
+    },
+    delTableData (state, payload) {
+      let index = state.covertSource.findIndex(i => i.id2 === payload.id2)
+      console.log(state.covertSource[index])
+      state.covertSource.splice(index, 1)
+    },
+    downloadFunction (state) {
+      var arr = []
+      var count = 0
+      while (count < state.covertSource.length) {
+        let cur = {
+          'ศูนย์ต้นทุน': state.covertSource[count].id1,
+          'เลขที่สินค้าคงคลัง': state.covertSource[count].id2,
+          'สินทรัพย์': state.covertSource[count].id3,
+          'คำอธิบายของสินทรัพย์': state.covertSource[count].id4,
+          'เลขที่ผลิตภัณฑ์': state.covertSource[count].id5,
+          'วันที่โอนเป็นทุน': state.covertSource[count].id6,
+          'มูลค่าที่ได้มา': state.covertSource[count].id7,
+          'ค่าเสื่อมสะสม': state.covertSource[count].id8,
+          'วิธีการที่ได้มา': state.covertSource[count].id9
+        }
+        arr.push(cur)
+        count++
+      }
+      state.totalExcel = arr
+      getCSV(state.totalExcel)
     }
   },
   strict: process.env.NODE_ENV !== 'production'

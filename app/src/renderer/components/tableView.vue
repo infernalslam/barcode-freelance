@@ -2,6 +2,7 @@
 <div>
 
 <a class="button is-success" @click="add  = true">เพิ่มข้อมูล</a>
+<a class="button is-info" @click="download()">ดาวน์โหลดข้อมูล</a>
 
   <table class="table">
     <thead>
@@ -23,7 +24,7 @@
       <td>{{ src.id8 }}</td>
       <td>{{ src.id9 }}</td>
       <td><a class="button is-info" @click="edit(src)">แก้ไขข้อมูล</a></td>
-      <td><a class="button is-danger">ลบ</a></td>
+      <td><a class="button is-danger" @click="del(src)">ลบ</a></td>
     </tr>
   </tbody>
   </table>
@@ -114,7 +115,9 @@ export default {
       'covertSource',
       'covertHeaders',
       'editData',
-      'addNewDataVuex'
+      'addNewDataVuex',
+      'delTableData',
+      'downloadFunction'
     ]),
     edit (src) {
       this.editData = src
@@ -142,6 +145,13 @@ export default {
       console.log(data)
       this.$store.dispatch('addNewDataVuex', data)
       this.add = false
+    },
+    del (src) {
+      // wait user interface for delete in table
+      this.$store.dispatch('delTableData', src)
+    },
+    download () {
+      this.$store.dispatch('downloadFunction')
     }
   },
   computed: {
