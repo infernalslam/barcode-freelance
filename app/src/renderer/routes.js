@@ -10,6 +10,11 @@ export default [
     component: require('components/form')
   },
   {
+    path: '/check',
+    name: 'check',
+    component: require('components/check')
+  },
+  {
     path: '*',
     redirect: '/'
   }

@@ -29,7 +29,7 @@
 
 
 
-            <div class="column">
+            <!-- <div class="column">
               <div class="column">
                 <div class="card">
                   <img src="https://fitm-messenger-e96c4.firebaseapp.com/static/img/title1.f18ad57.svg">
@@ -41,7 +41,7 @@
                   </div>
                 </div>
               </div>
-            </div>
+            </div> -->
 
 
 
@@ -56,7 +56,7 @@
                     <h1 class="title" style="color: #000;"><b>เช็คสินค้า</b></h1>
                     <b>เช็คสินค้า</b>
                     <br>
-                    <button  class="button is-danger"><b>เลือก</b></button>
+                    <router-link to="/check"  class="button is-danger" ><b>เลือก</b></router-link>
                   </div>
                 </div>
               </div>
