@@ -33,7 +33,9 @@ export default {
       reader.onload = (event) => {
         // console.log(reader.result)
         vm.data = vm.CSV2JSON(reader.result)
-        vm.$store.dispatch('saveData', vm.data)
+        // log state
+        console.log('this check ', vm.data)
+        // vm.$store.dispatch('saveData', vm.data)
         if (vm.data) vm.state = true
       }
       reader.readAsText(file)
