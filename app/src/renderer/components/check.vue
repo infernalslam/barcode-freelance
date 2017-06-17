@@ -16,18 +16,22 @@
         <p class="help is-danger"  v-if=" state === false ">This stock is not available</p>
         <p class="help is-info"   v-if=" state === null ">Ready to scan</p>
       </div>
+      <button class="button is-danger" @click="downloadFunction()">Report</button>
 
       <hr>
+
+      <br>
 
     <div v-for="src in barcodeDataMatch">
       <article class="message is-success">
         <div class="message-header">Successs ::: {{ src.id2 }}</div>
         <div class="message-body">
-          <strong>{{ src.id4 }}</strong>
-          &nbsp &nbsp &nbsp &nbsp&nbsp &nbsp &nbsp &nbsp&nbsp &nbsp &nbsp &nbsp
-          &nbsp &nbsp &nbsp &nbsp&nbsp &nbsp &nbsp &nbsp&nbsp &nbsp &nbsp &nbsp
-          <h1 style="font-size: 40px;'">X {{ src.id10 }}</h1>
-          <!-- <span>จำนวนของ {{ src.id10 }} ชิ้น</span> -->
+          <div class="columns">
+            <div class="column is-8">{{ src.id4 }}</div>
+            <div class="column" style="padding-left: 27%; padding-right: 5%;">
+              <span style="font-size: 30px;">X{{ src.id10 }}</span>
+            </div>
+          </div>
         </div>
     </article>
     <br>
@@ -110,7 +114,8 @@ export default {
     ...mapActions([
       'covertSource',
       'covertHeaders',
-      'barcodeDataMatch'
+      'barcodeDataMatch',
+      'downloadFunction'
     ])
   },
   computed: {

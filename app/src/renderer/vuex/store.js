@@ -36,7 +36,7 @@ export default new Vuex.Store({
     data: state => state.data,
     covertSource: state => state.covertSource,
     covertHeaders: state => state.covertHeaders,
-    barcodeDataMatch: state => state.barcodeDataMatch,
+    barcodeDataMatch: state => state.barcodeDataMatch.reverse(),
     state: state => state.state
   },
   actions: {
