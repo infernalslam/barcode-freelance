@@ -7,7 +7,7 @@ Vue.use(Vuex)
 function getCSV (JSONData) {
   /* eslint-disable */
   var arrData = typeof JSONData !== 'object' ? JSON.parse(JSONData) : JSONData
-  var CSV = 'ศูนย์ต้นทุน,เลขที่สินค้าคงคลัง,สินทรัพย์,คำอธิบายของสินทรัพย์,เลขที่ผลิตภัณฑ์,วันที่โอนเป็นทุน,มูลค่าที่ได้มา,ค่าเสื่อมสะสม,วิธีการที่ได้มา' + '\r\n'
+  var CSV = 'ศูนย์ต้นทุน,เลขที่สินค้าคงคลัง,สินทรัพย์,คำอธิบายของสินทรัพย์,เลขที่ผลิตภัณฑ์,วันที่โอนเป็นทุน,มูลค่าที่ได้มา,ค่าเสื่อมสะสม,วิธีการที่ได้มา,จำนวน' + '\r\n'
   for (var i = 0; i < arrData.length; i++) {
     var row = ''
     for (var index in arrData[i]) {
@@ -28,12 +28,16 @@ export default new Vuex.Store({
     data: '',
     covertSource: [],
     covertHeaders: [],
-    totalExcel: []
+    totalExcel: [],
+    barcodeDataMatch: [],
+    state: null
   },
   getters: {
     data: state => state.data,
     covertSource: state => state.covertSource,
-    covertHeaders: state => state.covertHeaders
+    covertHeaders: state => state.covertHeaders,
+    barcodeDataMatch: state => state.barcodeDataMatch,
+    state: state => state.state
   },
   actions: {
     saveData (context, payload) {
@@ -56,11 +60,15 @@ export default new Vuex.Store({
     },
     downloadFunction (context) {
       context.commit('downloadFunction')
+    },
+    barcodeDataMatch (context, payload) {
+      context.commit('barcodeDataMatch', payload)
     }
   },
   mutations: {
     saveData (state, payload) {
       state.data = JSON.parse(payload)
+      console.log(state.data)
     },
     covertSource (state) {
       let headers = Object.keys(state.data[0]).length
@@ -79,6 +87,7 @@ export default new Vuex.Store({
             else if (Object.keys(state.data[i])[j] === 'มูลค่าที่ได้มา') arr.id7 = state.data[i]['มูลค่าที่ได้มา']
             else if (Object.keys(state.data[i])[j] === 'ค่าเสื่อมสะสม') arr.id8 = state.data[i]['ค่าเสื่อมสะสม']
             else if (Object.keys(state.data[i])[j] === 'วิธีการที่ได้มา') arr.id9 = state.data[i]['วิธีการที่ได้มา']
+            else if (Object.keys(state.data[i])[j] === 'จำนวน') arr.id10 = state.data[i]['จำนวน']
           }
         }
         source.push(arr)
@@ -132,13 +141,32 @@ export default new Vuex.Store({
           'วันที่โอนเป็นทุน': state.covertSource[count].id6,
           'มูลค่าที่ได้มา': state.covertSource[count].id7,
           'ค่าเสื่อมสะสม': state.covertSource[count].id8,
-          'วิธีการที่ได้มา': state.covertSource[count].id9
+          'วิธีการที่ได้มา': state.covertSource[count].id9,
+          'จำนวน': state.covertSource[count].id10
         }
         arr.push(cur)
         count++
       }
       state.totalExcel = arr
       getCSV(state.totalExcel)
+    },
+    barcodeDataMatch (state, payload) {
+      var filter = state.covertSource.findIndex(i => i.id2 === payload)
+      console.log('filter ', filter)
+      if (filter === -1) {
+        state.state = false
+      }
+      else {
+        if (state.covertSource[filter].id10) {
+          state.covertSource[filter].id10 = parseInt(state.covertSource[filter].id10) + 1
+          var index = state.barcodeDataMatch.findIndex(i => i.id2 === payload)
+          if (index === -1) state.barcodeDataMatch.push(state.covertSource[filter])
+          else state.barcodeDataMatch[index] = state.covertSource[filter]
+          state.state = true
+        } else {
+          state.state = false
+        }
+      }
     }
   },
   strict: process.env.NODE_ENV !== 'production'

@@ -23,6 +23,7 @@
       <td>{{ src.id7 }}</td>
       <td>{{ src.id8 }}</td>
       <td>{{ src.id9 }}</td>
+      <td>{{ src.id10 }}</td>
       <td><a class="button is-info" @click="edit(src)">แก้ไขข้อมูล</a></td>
       <td><a class="button is-danger" @click="del(src)">ลบ</a></td>
     </tr>
