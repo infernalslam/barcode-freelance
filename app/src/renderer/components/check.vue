@@ -26,12 +26,15 @@
       <article class="message is-success">
         <div class="message-header">Successs ::: {{ src.id2 }}</div>
         <div class="message-body">
-          <div class="columns">
+          <div class="card-content">
+            {{ src.id4 }}  <span style="font-size: 30px;">&nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp X {{ src.id10 }}</span>
+          </div>
+          <!-- <div class="columns">
             <div class="column is-8">{{ src.id4 }}</div>
-            <div class="column" style="padding-left: 27%; padding-right: 5%;">
+            <div class="column is-4" style="padding-left: 27%; padding-right: 5%;">
               <span style="font-size: 30px;">X{{ src.id10 }}</span>
             </div>
-          </div>
+          </div> -->
         </div>
     </article>
     <br>
