@@ -15,7 +15,8 @@
             <div class="column">
               <div class="column">
                 <div class="card">
-                  <img src="https://fitm-messenger-e96c4.firebaseapp.com/static/img/title1.f18ad57.svg">
+                  <!-- <img src="https://fitm-messenger-e96c4.firebaseapp.com/static/img/title1.f18ad57.svg"> -->
+                  <img src="../../../../static/file.jpg" width="178.56px" height="160px">
                   <div class="card-detail">
                     <h1 style="color: #000;"><b>กรอกข้อมูล</b></h1>
                     <b>กรอกข้อมูลเเละอัปเดตข้อมูล</b>
@@ -51,7 +52,8 @@
             <div class="column">
               <div class="column">
                 <div class="card">
-                  <img src="https://fitm-messenger-e96c4.firebaseapp.com/static/img/title1.f18ad57.svg">
+                  <!-- <img src="https://fitm-messenger-e96c4.firebaseapp.com/static/img/title1.f18ad57.svg"> -->
+                  <img src="../../../../static/logo.png">
                   <div class="card-detail">
                     <h1 class="title" style="color: #000;"><b>เช็คสินค้า</b></h1>
                     <b>เช็คสินค้า</b>
@@ -79,7 +81,8 @@
 
 <style>
 .is-bg {
-  background: linear-gradient(135deg,#1a8efa,#5931b5);
+  /*background: linear-gradient(135deg,#1a8efa,#5931b5);*/
+  background: linear-gradient(to right, rgba(164,179,87,1) 0%, rgba(117,137,12,1) 100%);
 }
 .card {
   clear: both;
