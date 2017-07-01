@@ -50,6 +50,15 @@
         </header>
         <section class="modal-card-body">
           <div class="content">
+
+            <h4 class="title-text">รูปภาพ</h4>
+            <div class="columns">
+              <div class="column is-12">
+                <img :src="image" /> <br>
+                <input type="file" @change="upload">
+              </div>
+            </div>
+
             <h4 class="title-text">รหัสสินค้า</h4>
             <div class="columns">
               <div class="column">
@@ -210,7 +219,8 @@ export default {
       editData: {},
       place: {},
       add: false,
-      addNewData: {}
+      addNewData: {},
+      image: ''
     }
   },
   methods: {
@@ -255,6 +265,21 @@ export default {
     },
     download () {
       this.$store.dispatch('downloadFunction')
+    },
+    upload (e) {
+      var files = e.target.files || e.dataTransfer.files
+      console.log('file - ', files)
+      if (!files.length) return
+      this.createImg(files[0])
+    },
+    createImg (files) {
+      var image = new Image()
+      var reader = new FileReader()
+      var vm = this
+      reader.onload = (e) => {
+        vm.image = e.target.result
+      }
+      reader.readAsDataURL(files)
     }
   },
   computed: {
