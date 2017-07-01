@@ -1,60 +1,28 @@
 <template>
   <div>
     <section class="hero is-success is-fullheight is-bg">
-
       <div class="hero-body">
         <div class="container">
-
-
           <div class="container has-text-centered">
             <h1 class="title"> ระบบจัดการออเดอร์ </h1>
+            <br>
           </div>
-
           <div class="columns">
-
             <div class="column">
               <div class="column">
                 <div class="card">
-                  <!-- <img src="https://fitm-messenger-e96c4.firebaseapp.com/static/img/title1.f18ad57.svg"> -->
-                  <img src="../../../../static/file.jpg" width="178.56px" height="160px">
                   <div class="card-detail">
+                    <img src="../../../../static/file.jpg" width="178.56px" height="160px">
                     <h1 style="color: #000;"><b>กรอกข้อมูล</b></h1>
                     <b>กรอกข้อมูลเเละอัปเดตข้อมูล</b>
                     <br>
                     <router-link to="/form"  class="button is-danger" ><b>เลือก</b></router-link>
                   </div>
                 </div>
-              </div>
-            </div>
-
-
-
-
-            <!-- <div class="column">
-              <div class="column">
+                <br>
                 <div class="card">
-                  <img src="https://fitm-messenger-e96c4.firebaseapp.com/static/img/title1.f18ad57.svg">
                   <div class="card-detail">
-                    <h1 style="color: #000;"><b>ดาว์นโหลดฐานข้อมูล</b></h1>
-                    <b>ดาว์นโหลดข้อมูลใส่ mobile </b>
-                    <br>
-                    <button  class="button is-danger"><b>เลือก</b></button>
-                  </div>
-                </div>
-              </div>
-            </div> -->
-
-
-
-
-
-
-            <div class="column">
-              <div class="column">
-                <div class="card">
-                  <!-- <img src="https://fitm-messenger-e96c4.firebaseapp.com/static/img/title1.f18ad57.svg"> -->
-                  <img src="../../../../static/logo.png">
-                  <div class="card-detail">
+                    <img src="../../../../static/logo.png">
                     <h1 class="title" style="color: #000;"><b>เช็คสินค้า</b></h1>
                     <b>เช็คสินค้า</b>
                     <br>
@@ -63,10 +31,7 @@
                 </div>
               </div>
             </div>
-
-
           </div>
-
         </div>
       </div>
     </section>
@@ -81,12 +46,14 @@
 
 <style>
 .is-bg {
-  /*background: linear-gradient(135deg,#1a8efa,#5931b5);*/
   background: linear-gradient(to right, rgba(164,179,87,1) 0%, rgba(117,137,12,1) 100%);
 }
 .card {
   clear: both;
   height: 200px;
+  width: auto;
+  margin-left: 25%;
+  margin-right: 25%;
   display: block;
   background-color: #fff;
   padding: 20px;

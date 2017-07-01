@@ -3,11 +3,19 @@
 
 <a class="button is-success" @click="add  = true">เพิ่มข้อมูล</a>
 <a class="button is-info" @click="download()">ดาวน์โหลดข้อมูล</a>
+<br><br>
 
   <table class="table">
     <thead>
     <tr>
-      <th v-for="h in covertHeaders">  {{ h.id }} </th>
+      <!-- <th v-for="h in covertHeaders">  {{ h.id }} </th> -->
+      <th>ศูนย์ต้นทุน</th>
+      <th>เลขที่สินค้าคงคลัง</th>
+      <th>สินทรัพย์</th>
+      <th>คำอธิบายของสินทรัพย์</th>
+      <th>เลขที่ผลิตภัณฑ์</th>
+      <th>วิธีการที่ได้มา</th>
+      <!-- <th>จำนวน</th> -->
       <th></th>
       <th></th>
     </tr>
@@ -19,11 +27,11 @@
       <td>{{ src.id3 }}</td>
       <td>{{ src.id4 }}</td>
       <td>{{ src.id5 }}</td>
-      <td>{{ src.id6 }}</td>
-      <td>{{ src.id7 }}</td>
-      <td>{{ src.id8 }}</td>
+      <!-- <td>{{ src.id6 }}</td> -->
+      <!-- <td>{{ src.id7 }}</td> -->
+      <!-- <td>{{ src.id8 }}</td> -->
       <td>{{ src.id9 }}</td>
-      <td>{{ src.id10 }}</td>
+      <!-- <td>{{ src.id10 }}</td> -->
       <td><a class="button is-info" @click="edit(src)">แก้ไขข้อมูล</a></td>
       <td><a class="button is-danger" @click="del(src)">ลบ</a></td>
     </tr>

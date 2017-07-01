@@ -1,8 +1,6 @@
 <template lang="html">
   <div>
     <section class="hero is-success is-fullheight is-bg">
-
-
       <div class="hero-head">
         <header class="nav">
           <div class="container">
@@ -18,16 +16,9 @@
           </div>
         </header>
       </div>
-
-
       <div class="hero-body">
         <div class="container">
-
-
           <table-view v-if="state"/>
-
-
-
         </div>
       </div>
     </section>
