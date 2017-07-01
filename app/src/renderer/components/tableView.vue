@@ -16,6 +16,7 @@
       <th>เลขที่ผลิตภัณฑ์</th>
       <th>วิธีการที่ได้มา</th>
       <th>จำนวน</th>
+      <!-- <th>รูปภาพ</th> -->
       <th></th>
       <th></th>
     </tr>
@@ -32,6 +33,7 @@
       <td>{{ src.id8 }}</td>
       <!-- <td>{{ src.id9 }}</td> -->
       <td>{{ src.id10 }}</td>
+      <!-- <td>{{ src.id11 }}</td> -->
       <td><a class="button is-info" @click="edit(src)">แก้ไขข้อมูล</a></td>
       <td><a class="button is-danger" @click="del(src)">ลบ</a></td>
     </tr>
@@ -54,7 +56,12 @@
             <h4 class="title-text">รูปภาพ</h4>
             <div class="columns">
               <div class="column is-12">
-                <img :src="image" /> <br>
+                <div v-if="image !== '' && editData.id11 === '' ">
+                  <img :src="image" /> <br>
+                </div>
+                <div v-if="editData !== '' ">
+                  <img :src="editData.id11" /> <br>
+                </div>
                 <input type="file" @change="upload">
               </div>
             </div>
@@ -227,7 +234,6 @@ export default {
     ...mapActions([
       'covertSource',
       'covertHeaders',
-      'editData',
       'addNewDataVuex',
       'delTableData',
       'downloadFunction'
@@ -239,8 +245,10 @@ export default {
       console.log(src)
     },
     addEdit (editData) {
+      editData.id11 = this.image
       this.$store.dispatch('edit', editData)
       this.editData = {}
+      this.image = ''
       this.show = false
     },
     addDataStore () {
@@ -278,6 +286,8 @@ export default {
       var vm = this
       reader.onload = (e) => {
         vm.image = e.target.result
+        // working savw image
+        // console.log('image source -> ', vm.image)
       }
       reader.readAsDataURL(files)
     }

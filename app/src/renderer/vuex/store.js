@@ -7,7 +7,7 @@ Vue.use(Vuex)
 function getCSV (JSONData) {
   /* eslint-disable */
   var arrData = typeof JSONData !== 'object' ? JSON.parse(JSONData) : JSONData
-  var CSV = 'ศูนย์ต้นทุน,เลขที่สินค้าคงคลัง,สินทรัพย์,คำอธิบายของสินทรัพย์,เลขที่ผลิตภัณฑ์,วันที่โอนเป็นทุน,มูลค่าที่ได้มา,ค่าเสื่อมสะสม,วิธีการที่ได้มา,จำนวน' + '\r\n'
+  var CSV = 'ศูนย์ต้นทุน,เลขที่สินค้าคงคลัง,สินทรัพย์,คำอธิบายของสินทรัพย์,เลขที่ผลิตภัณฑ์,วันที่โอนเป็นทุน,มูลค่าที่ได้มา,ค่าเสื่อมสะสม,วิธีการที่ได้มา,จำนวน,รูปภาพ' + '\r\n'
   for (var i = 0; i < arrData.length; i++) {
     var row = ''
     for (var index in arrData[i]) {
@@ -88,6 +88,7 @@ export default new Vuex.Store({
             else if (Object.keys(state.data[i])[j] === 'ค่าเสื่อมสะสม') arr.id8 = state.data[i]['ค่าเสื่อมสะสม']
             else if (Object.keys(state.data[i])[j] === 'วิธีการที่ได้มา') arr.id9 = state.data[i]['วิธีการที่ได้มา']
             else if (Object.keys(state.data[i])[j] === 'จำนวน') arr.id10 = state.data[i]['จำนวน']
+            else if (Object.keys(state.data[i])[j] === 'รูปภาพ') arr.id11 = state.data[i]['รูปภาพ']
           }
         }
         source.push(arr)
@@ -104,6 +105,7 @@ export default new Vuex.Store({
       state.covertHeaders = arr
     },
     edit (state, payload) {
+      console.log('payload :-> ', payload)
       let index = state.covertSource.findIndex(i => i.id2 === payload.id2)
       state.covertSource[index] = payload
       console.log(state.covertSource[index])
@@ -142,7 +144,8 @@ export default new Vuex.Store({
           'มูลค่าที่ได้มา': state.covertSource[count].id7,
           'ค่าเสื่อมสะสม': state.covertSource[count].id8,
           'วิธีการที่ได้มา': state.covertSource[count].id9,
-          'จำนวน': state.covertSource[count].id10
+          'จำนวน': state.covertSource[count].id10,
+          'รูปภาพ': state.covertSource[count].id11
         }
         arr.push(cur)
         count++
