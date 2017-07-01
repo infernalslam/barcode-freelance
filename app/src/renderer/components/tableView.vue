@@ -15,7 +15,7 @@
       <th>คำอธิบายของสินทรัพย์</th>
       <th>เลขที่ผลิตภัณฑ์</th>
       <th>วิธีการที่ได้มา</th>
-      <!-- <th>จำนวน</th> -->
+      <th>จำนวน</th>
       <th></th>
       <th></th>
     </tr>
@@ -29,9 +29,9 @@
       <td>{{ src.id5 }}</td>
       <!-- <td>{{ src.id6 }}</td> -->
       <!-- <td>{{ src.id7 }}</td> -->
-      <!-- <td>{{ src.id8 }}</td> -->
-      <td>{{ src.id9 }}</td>
-      <!-- <td>{{ src.id10 }}</td> -->
+      <td>{{ src.id8 }}</td>
+      <!-- <td>{{ src.id9 }}</td> -->
+      <td>{{ src.id10 }}</td>
       <td><a class="button is-info" @click="edit(src)">แก้ไขข้อมูล</a></td>
       <td><a class="button is-danger" @click="del(src)">ลบ</a></td>
     </tr>
@@ -45,12 +45,106 @@
       <div class="modal-background"></div>
       <div class="modal-card">
         <header class="modal-card-head">
-          <p class="modal-card-title">หน้าต่างแก้ไข {{ editData.id1 }}</p>
+          <p class="modal-card-title">ข้อมูลสินค้า</p>
           <button class="delete" @click="show = false"></button>
         </header>
         <section class="modal-card-body">
           <div class="content">
-            <input type="text" :placeholder="place.id1" v-model="editData.id1"> <br>
+            <h4 class="title-text">รหัสสินค้า</h4>
+            <div class="columns">
+              <div class="column">
+                <div class="field">
+                    <label class="label">ศูนย์ต้นทุน</label>
+                    <p class="control">
+                      <input class="input is-success" type="text" v-model="editData.id1">
+                    </p>
+                  </div>
+              </div>
+              <div class="column">
+                <div class="field">
+                    <label class="label">เลขที่สินค้าคงคลัง	</label>
+                    <p class="control">
+                      <input class="input is-success" type="text" v-model="editData.id2">
+                    </p>
+                  </div>
+              </div>
+              <div class="column">
+                <div class="field">
+                    <label class="label">สินทรัพย์</label>
+                    <p class="control">
+                      <input class="input is-success" type="text" v-model="editData.id3">
+                    </p>
+                  </div>
+              </div>
+            </div>
+            <h4 class="title-text">รายละเอียดสินค้า</h4>
+            <div class="columns">
+                <div class="column">
+                  <div class="field">
+                      <label class="label">เลขที่ผลิตภัณฑ์</label>
+                      <p class="control">
+                        <input class="input is-success" type="text" v-model="editData.id5">
+                      </p>
+                    </div>
+                </div>
+                <div class="column">
+                  <div class="field">
+                      <label class="label">วันที่โอนเป็นทุน</label>
+                      <p class="control">
+                        <input class="input is-success" type="text" v-model="editData.id6">
+                      </p>
+                    </div>
+                </div>
+            </div>
+            <div class="columns">
+              <div class="column">
+                <div class="field">
+                    <label class="label">คำอธิบายของสินทรัพย์</label>
+                    <p class="control">
+                      <textarea class="textarea is-success" type="text" v-model="editData.id4"  rows="4" cols="50" />
+                    </p>
+                  </div>
+              </div>
+            </div>
+            <div class="columns">
+              <div class="column">
+                <div class="field">
+                    <label class="label">มูลค่าที่ได้มา</label>
+                    <p class="control">
+                      <input class="input is-success" type="text" v-model="editData.id7" />
+                    </p>
+                  </div>
+              </div>
+              <div class="column">
+                <div class="field">
+                    <label class="label">ค่าเสื่อมสะสม</label>
+                    <p class="control">
+                      <input class="input is-success" type="text" v-model="editData.id8" />
+                    </p>
+                  </div>
+              </div>
+            </div>
+            <h4 class="title-text">รายละเอียดคลังสินค้า</h4>
+            <div class="columns">
+              <div class="column">
+                <div class="field">
+                    <label class="label">วิธีการได้มา</label>
+                    <p class="control">
+                      <input class="input is-success" type="text" v-model="editData.id9" />
+                    </p>
+                  </div>
+              </div>
+              <div class="column">
+                <div class="field">
+                    <label class="label">จำนวน</label>
+                    <p class="control">
+                      <input class="input is-success" type="text" v-model="editData.id10" />
+                    </p>
+                  </div>
+              </div>
+            </div>
+            <!-- <h4 class="title-text">รายละเอียดสินค้า</h4> -->
+            <!-- <input type="text" :placeholder="place.id1" v-model="editData.id1"> <br>
             <input type="text" :placeholder="place.id2" v-model="editData.id2"> <br>
             <input type="text" :placeholder="place.id3" v-model="editData.id3"> <br>
             <input type="text" :placeholder="place.id4" v-model="editData.id4"> <br>
@@ -58,7 +152,7 @@
             <input type="text" :placeholder="place.id6" v-model="editData.id6"> <br>
             <input type="text" :placeholder="place.id7" v-model="editData.id7"> <br>
             <input type="text" :placeholder="place.id8" v-model="editData.id8"> <br>
-            <input type="text" :placeholder="place.id9" v-model="editData.id9"> <br>
+            <input type="text" :placeholder="place.id9" v-model="editData.id9"> <br> -->
           </div>
         </section>
         <footer class="modal-card-foot">
@@ -177,4 +271,8 @@ export default {
 </script>
 
 <style lang="css">
+.title-text {
+  border-bottom: solid 2px #4ECD00;
+  padding-bottom: 6px;
+}
 </style>

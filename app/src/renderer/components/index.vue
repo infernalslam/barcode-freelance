@@ -1,10 +1,10 @@
 <template>
   <div>
-    <section class="hero is-success is-fullheight is-bg">
+    <section class="hero is-fullheight is-bg">
       <div class="hero-body">
         <div class="container">
           <div class="container has-text-centered">
-            <h1 class="title"> ระบบจัดการออเดอร์ </h1>
+            <div class="break"><h1 class="title title-text"> ระบบจัดการออเดอร์ </h1></div>
             <br>
           </div>
           <div class="columns">
@@ -22,8 +22,8 @@
                 <br>
                 <div class="card">
                   <div class="card-detail">
-                    <img src="../../../../static/logo.png">
-                    <h1 class="title" style="color: #000;"><b>เช็คสินค้า</b></h1>
+                    <img src="../../../../static/logo.png" width="178.56px" height="160px">
+                    <h3 class="title" style="color: #000;"><b>เช็คสินค้า</b></h3>
                     <b>เช็คสินค้า</b>
                     <br>
                     <router-link to="/check"  class="button is-danger" ><b>เลือก</b></router-link>
@@ -46,7 +46,7 @@
 
 <style>
 .is-bg {
-  background: linear-gradient(to right, rgba(164,179,87,1) 0%, rgba(117,137,12,1) 100%);
+  /*background: linear-gradient(to right, rgba(164,179,87,1) 0%, rgba(117,137,12,1) 100%);*/
 }
 .card {
   clear: both;
@@ -70,6 +70,10 @@
 }
 .card .card-detail {
     margin-left: 90px;
+}
+.break {
+  margin-left: 25%;
+  margin-right: 25%;
 }
 
 </style>

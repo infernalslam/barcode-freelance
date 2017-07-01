@@ -1,12 +1,12 @@
 <template lang="html">
   <div>
-    <section class="hero is-success is-fullheight is-bg">
+    <section class="hero is-fullheight is-bg">
       <div class="hero-head">
         <header class="nav">
           <div class="container">
             <div class="nav-right nav-menu">
               <span class="nav-item">
-                <router-link to="/" class="button is-danger is-focused" style="color: #fff;"> <b>กลับไปหน้าเเรก</b></router-link> &nbsp&nbsp
+                <router-link to="/" class="button is-outlined"> <b>กลับไปหน้าเเรก</b></router-link> &nbsp&nbsp
 
                 <div class="file-input-wrapper">
                   <label class="file-input-button">อัปเดตฐานข้อมูล <input type="file" @change="onFileChange" /> </label>
