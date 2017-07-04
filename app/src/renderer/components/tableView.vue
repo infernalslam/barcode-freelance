@@ -1,8 +1,38 @@
 <template lang="html">
 <div>
 
-<a class="button is-success" @click="add  = true">เพิ่มข้อมูล</a>
+<!-- <a class="button is-success" @click="add  = true">เพิ่มข้อมูล</a>
 <a class="button is-info" @click="download()">ดาวน์โหลดข้อมูล</a>
+<div class="field has-addons">
+  <p class="control">
+    <input class="input" type="text" placeholder="search">
+  </p>
+  <p class="control">
+    <a class="button is-info">
+      Search
+    </a>
+  </p>
+</div> -->
+
+<div class="columns">
+  <div class="column is-1"><a class="button is-success" @click="add  = true">เพิ่มข้อมูล</a></div>
+  <div class="column is-2"><a class="button is-info" @click="download()">ดาวน์โหลดข้อมูล</a></div>
+  <div class="column is-6"></div>
+  <div class="column is-3">
+    <div class="field has-addons">
+      <p class="control">
+        <input class="input"  v-model="text" type="text" placeholder="search">
+      </p>
+      <p class="control">
+        <a class="button is-info">
+          Search
+        </a>
+      </p>
+    </div>
+  </div>
+</div>
+
+
 <br><br>
 
   <table class="table">
@@ -22,7 +52,7 @@
     </tr>
   </thead>
   <tbody>
-    <tr v-for="src in covertSource">
+    <tr v-for="src in sortData">
       <td>{{ src.id1 }}</td>
       <td>{{ src.id2 }}</td>
       <td>{{ src.id3 }}</td>
@@ -43,14 +73,14 @@
   <br>
 
   <!-- modal -->
-      <div class="modal" :class=" {'is-active' : show} ">
+      <div  class="modal" :class=" {'is-active' : show} ">
       <div class="modal-background"></div>
       <div class="modal-card">
         <header class="modal-card-head">
           <p class="modal-card-title">ข้อมูลสินค้า</p>
           <button class="delete" @click="show = false"></button>
         </header>
-        <section class="modal-card-body">
+        <section class="modal-card-body" id="print">
           <div class="content">
 
             <h4 class="title-text">รูปภาพ</h4>
@@ -173,7 +203,9 @@
         </section>
         <footer class="modal-card-foot">
           <a class="button is-success" @click="addEdit(editData)">ยืนยัน</a>
+          <a class="button is-info" @click="print()">พิมพ์รายงาน</a>
           <a class="button" @click="show = false">ยกเลิก</a>
+
         </footer>
       </div>
     </div>
@@ -191,7 +223,116 @@
     </header>
     <section class="modal-card-body">
       <div class="content">
-        <input type="text" placeholder="ศูนย์ต้นทุน" v-model="addNewData.id1"> <br>
+
+        <h4 class="title-text">รูปภาพ</h4>
+        <div class="columns">
+          <div class="column is-12">
+            <div v-if="image !== '' && addNewData.id11 === '' ">
+              <img :src="image" /> <br>
+            </div>
+            <div v-if="addNewData !== '' ">
+              <img :src="addNewData.id11" /> <br>
+            </div>
+            <input type="file" @change="upload">
+          </div>
+        </div>
+
+        <h4 class="title-text">รหัสสินค้า</h4>
+        <div class="columns">
+          <div class="column">
+            <div class="field">
+                <label class="label">ศูนย์ต้นทุน</label>
+                <p class="control">
+                  <input class="input is-success" type="text" v-model="addNewData.id1">
+                </p>
+              </div>
+          </div>
+          <div class="column">
+            <div class="field">
+                <label class="label">เลขที่สินค้าคงคลัง	</label>
+                <p class="control">
+                  <input class="input is-success" type="text" v-model="addNewData.id2">
+                </p>
+              </div>
+          </div>
+          <div class="column">
+            <div class="field">
+                <label class="label">สินทรัพย์</label>
+                <p class="control">
+                  <input class="input is-success" type="text" v-model="addNewData.id3">
+                </p>
+              </div>
+          </div>
+        </div>
+
+        <h4 class="title-text">รายละเอียดสินค้า</h4>
+        <div class="columns">
+            <div class="column">
+              <div class="field">
+                  <label class="label">เลขที่ผลิตภัณฑ์</label>
+                  <p class="control">
+                    <input class="input is-success" type="text" v-model="addNewData.id5">
+                  </p>
+                </div>
+            </div>
+            <div class="column">
+              <div class="field">
+                  <label class="label">วันที่โอนเป็นทุน</label>
+                  <p class="control">
+                    <input class="input is-success" type="text" v-model="addNewData.id6">
+                  </p>
+                </div>
+            </div>
+        </div>
+        <div class="columns">
+          <div class="column">
+            <div class="field">
+                <label class="label">คำอธิบายของสินทรัพย์</label>
+                <p class="control">
+                  <textarea class="textarea is-success" type="text" v-model="addNewData.id4"  rows="4" cols="50" />
+                </p>
+              </div>
+          </div>
+        </div>
+        <div class="columns">
+          <div class="column">
+            <div class="field">
+                <label class="label">มูลค่าที่ได้มา</label>
+                <p class="control">
+                  <input class="input is-success" type="text" v-model="addNewData.id7" />
+                </p>
+              </div>
+          </div>
+          <div class="column">
+            <div class="field">
+                <label class="label">ค่าเสื่อมสะสม</label>
+                <p class="control">
+                  <input class="input is-success" type="text" v-model="addNewData.id8" />
+                </p>
+              </div>
+          </div>
+        </div>
+        <h4 class="title-text">รายละเอียดคลังสินค้า</h4>
+        <div class="columns">
+          <div class="column">
+            <div class="field">
+                <label class="label">วิธีการได้มา</label>
+                <p class="control">
+                  <input class="input is-success" type="text" v-model="addNewData.id9" />
+                </p>
+              </div>
+          </div>
+          <div class="column">
+            <div class="field">
+                <label class="label">จำนวน</label>
+                <p class="control">
+                  <input class="input is-success" type="text" v-model="addNewData.id10" />
+                </p>
+              </div>
+          </div>
+        </div>
+
+        <!-- <input type="text" placeholder="ศูนย์ต้นทุน" v-model="addNewData.id1"> <br>
         <input type="text" placeholder="เลขที่สินค้าคงคลัง" v-model="addNewData.id2"> <br>
         <input type="text" placeholder="สินทรัพย์" v-model="addNewData.id3"> <br>
         <input type="text" placeholder="คำอธิบายของสินทรัพย์" v-model="addNewData.id4"> <br>
@@ -200,6 +341,8 @@
         <input type="text" placeholder="มูลค่าที่ได้มา" v-model="addNewData.id7"> <br>
         <input type="text" placeholder="ค่าเสื่อมสะสม" v-model="addNewData.id8"> <br>
         <input type="text" placeholder="วิธีการที่ได้มา" v-model="addNewData.id9"> <br>
+        <input type="text" placeholder="จำนวน" v-model="addNewData.id10"> <br>
+        <input type="text" placeholder="รูปภาพ" v-model="addNewData.id11"> <br> -->
       </div>
     </section>
     <footer class="modal-card-foot">
@@ -227,7 +370,8 @@ export default {
       place: {},
       add: false,
       addNewData: {},
-      image: ''
+      image: '',
+      text: ''
     }
   },
   methods: {
@@ -280,6 +424,12 @@ export default {
       if (!files.length) return
       this.createImg(files[0])
     },
+    print () {
+      // console.log('test')
+      var divContents = document.getElementById('print')
+      //
+      window.print(divContents)
+    },
     createImg (files) {
       var image = new Image()
       var reader = new FileReader()
@@ -296,7 +446,12 @@ export default {
     ...mapGetters([
       'covertSource',
       'covertHeaders'
-    ])
+    ]),
+    sortData () {
+      return this.covertSource.filter(item => {
+        return item.id2.indexOf(this.text) > -1
+      })
+    }
   },
   mounted () {
     this.$store.dispatch('covertHeaders')
