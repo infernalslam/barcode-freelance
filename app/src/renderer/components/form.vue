@@ -16,6 +16,7 @@
           </div>
         </header>
       </div>
+      <a class="button is-success is-loading" v-if="loading">Loading</a>
       <div class="hero-body">
         <div class="container">
           <table-view v-if="state"/>
@@ -37,7 +38,8 @@ export default {
   data () {
     return {
       data: '',
-      state: false
+      state: false,
+      loading: false
     }
   },
   mounted () {
@@ -53,8 +55,10 @@ export default {
         vm.data = vm.CSV2JSON(reader.result)
         vm.$store.dispatch('saveData', vm.data)
         // if (vm.data) vm.state = true
+        vm.loading = true
         setTimeout(() => {
           vm.state = true
+          vm.loading = false
         }, 5000)
         // console.log('this.data : ', vm.data)
       }

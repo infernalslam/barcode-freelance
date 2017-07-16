@@ -24,9 +24,7 @@
         <input class="input"  v-model="text" type="text" placeholder="search">
       </p>
       <p class="control">
-        <a class="button is-info">
-          Search
-        </a>
+        <a class="button is-info" @click="sortData(text)">Search</a>
       </p>
     </div>
   </div>
@@ -52,7 +50,7 @@
     </tr>
   </thead>
   <tbody>
-    <tr v-for="src in sortData">
+    <tr v-for="src in covertSource">
       <td>{{ src.id1 }}</td>
       <td>{{ src.id2 }}</td>
       <td>{{ src.id3 }}</td>
@@ -230,12 +228,8 @@
         <h4 class="title-text">รูปภาพ</h4>
         <div class="columns">
           <div class="column is-12">
-            <div v-if="image !== '' && addNewData.id11 === '' ">
-              <img :src="image" /> <br>
-            </div>
-            <div v-if="addNewData !== '' ">
-              <img :src="addNewData.id11" /> <br>
-            </div>
+            <img :src="image" v-if="image === '' " />
+            <img :src="addNewData.id11" v-if=" addNewData.id11 !== '' " />
             <input type="file" @change="upload">
           </div>
         </div>
@@ -386,6 +380,16 @@ export default {
       'downloadFunction',
       'updatePic'
     ]),
+    sortData (id) {
+      let index = this.covertSource.findIndex(i => i.id2 === id)
+      if (index === -1) {
+        // not found
+        alert('not Found!')
+      } else {
+        this.editData = this.covertSource[index]
+        this.show = true
+      }
+    },
     edit (src) {
       this.editData = src
       this.place = src
@@ -408,7 +412,9 @@ export default {
         'วันที่โอนเป็นทุน': this.addNewData.id6,
         'มูลค่าที่ได้มา': this.addNewData.id7,
         'ค่าเสื่อมสะสม': this.addNewData.id8,
-        'วิธีการที่ได้มา': this.addNewData.id9
+        'วิธีการที่ได้มา': this.addNewData.id9,
+        'จำนวน': this.addNewData.id10,
+        'รูปภาพ': this.addNewData.id11
       }
       console.log(data)
       this.$store.dispatch('addNewDataVuex', data)
@@ -453,16 +459,17 @@ export default {
     ...mapGetters([
       'covertSource',
       'covertHeaders'
-    ]),
-    sortData () {
-      return this.covertSource.filter(item => {
-        return item.id2.indexOf(this.text) > -1
-      })
-    }
+    ])
+    // ,
+    // sortData () {
+    //   return this.covertSource.filter(item => {
+    //     return item.id2.indexOf(this.text) > -1
+    //   })
+    // }
   },
-  mounted () {
+  async mounted () {
     this.$store.dispatch('covertHeaders')
-    this.$store.dispatch('covertSource')
+    let x = await this.$store.dispatch('covertSource')
   }
 }
 </script>

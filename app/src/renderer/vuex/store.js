@@ -2,26 +2,26 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 
 Vue.use(Vuex)
-
+/* eslint-disable */
 // function CSV
-function getCSV (JSONData) {
-  /* eslint-disable */
-  var arrData = typeof JSONData !== 'object' ? JSON.parse(JSONData) : JSONData
-  var CSV = 'ศูนย์ต้นทุน,เลขที่สินค้าคงคลัง,สินทรัพย์,คำอธิบายของสินทรัพย์,เลขที่ผลิตภัณฑ์,วันที่โอนเป็นทุน,มูลค่าที่ได้มา,ค่าเสื่อมสะสม,วิธีการที่ได้มา,จำนวน,รูปภาพ' + '\r\n'
-  for (var i = 0; i < arrData.length; i++) {
-    var row = ''
-    for (var index in arrData[i]) {
-      row += '"' + arrData[i][index] + '",'
-    }
-    row.slice(0, row.length - 1)
-    CSV += row + '\r\n'
-  }
-  // console.log('JSONData: ', CSV)
-  var csvContent = "data:text/csv;charset=utf-8,"
-  csvContent += CSV
-  var encodedUri = encodeURI(csvContent)
-  window.open(encodedUri)
-}
+// function getCSV (JSONData) {
+//   /* eslint-disable */
+//   var arrData = typeof JSONData !== 'object' ? JSON.parse(JSONData) : JSONData
+//   var CSV = 'ศูนย์ต้นทุน,เลขที่สินค้าคงคลัง,สินทรัพย์,คำอธิบายของสินทรัพย์,เลขที่ผลิตภัณฑ์,วันที่โอนเป็นทุน,มูลค่าที่ได้มา,ค่าเสื่อมสะสม,วิธีการที่ได้มา,จำนวน,รูปภาพ' + '\r\n'
+//   for (var i = 0; i < arrData.length; i++) {
+//     var row = ''
+//     for (var index in arrData[i]) {
+//       row += '"' + arrData[i][index] + '",'
+//     }
+//     row.slice(0, row.length - 1)
+//     CSV += row + '\r\n'
+//   }
+//   // console.log('JSONData: ', CSV)
+//   var csvContent = "data:text/csv;charset=utf-8,"
+//   csvContent += CSV
+//   var encodedUri = encodeURI(csvContent)
+//   window.open(encodedUri)
+// }
 
 export default new Vuex.Store({
   state: {
@@ -73,7 +73,7 @@ export default new Vuex.Store({
       state.data = JSON.parse(payload)
       console.log(state.data)
     },
-    covertSource (state) {
+    async covertSource (state) {
       let headers = Object.keys(state.data[0]).length
       let multple = Object.keys(state.data[0]).length - 1
       let arr = {}
@@ -95,7 +95,7 @@ export default new Vuex.Store({
           }
         }
         source.push(arr)
-        state.covertSource = source
+        state.covertSource = await source
         arr = {}
         console.log('covertSource :', state.covertSource)
       }
@@ -156,8 +156,20 @@ export default new Vuex.Store({
         count++
       }
       state.totalExcel = await arr
-      console.log('state.totalExcel :', state.totalExcel)
-      getCSV(state.totalExcel)
+      var arrData = await typeof state.totalExcel !== 'object' ? JSON.parse(state.totalExcel) : state.totalExcel
+      var CSV = 'ศูนย์ต้นทุน,เลขที่สินค้าคงคลัง,สินทรัพย์,คำอธิบายของสินทรัพย์,เลขที่ผลิตภัณฑ์,วันที่โอนเป็นทุน,มูลค่าที่ได้มา,ค่าเสื่อมสะสม,วิธีการที่ได้มา,จำนวน,รูปภาพ' + '\r\n'
+      for (var i = 0; i < arrData.length; i++) {
+        var row = ''
+        for (var index in arrData[i]) {
+          row += '"' + arrData[i][index] + '",'
+        }
+        row.slice(0, row.length - 1)
+        CSV += row + '\r\n'
+      }
+      var csvContent = "data:text/csv;charset=utf-8,"
+      csvContent += CSV
+      var encodedUri = await encodeURI(csvContent)
+      window.open(encodedUri)
     },
     barcodeDataMatch (state, payload) {
       var filter = state.covertSource.findIndex(i => i.id2 === payload)
