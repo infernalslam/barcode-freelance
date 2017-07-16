@@ -41,6 +41,7 @@ export default {
     }
   },
   mounted () {
+    this.state = false
   },
   methods: {
     onFileChange (e) {
@@ -51,7 +52,10 @@ export default {
         // console.log(reader.result)
         vm.data = vm.CSV2JSON(reader.result)
         vm.$store.dispatch('saveData', vm.data)
-        if (vm.data) vm.state = true
+        // if (vm.data) vm.state = true
+        setTimeout(() => {
+          vm.state = true
+        }, 5000)
         // console.log('this.data : ', vm.data)
       }
       reader.readAsText(file)

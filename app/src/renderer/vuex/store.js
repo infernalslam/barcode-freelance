@@ -63,6 +63,9 @@ export default new Vuex.Store({
     },
     barcodeDataMatch (context, payload) {
       context.commit('barcodeDataMatch', payload)
+    },
+    updatePic (context, payload) {
+      context.commit('updatePic', payload)
     }
   },
   mutations: {
@@ -94,6 +97,7 @@ export default new Vuex.Store({
         source.push(arr)
         state.covertSource = source
         arr = {}
+        console.log('covertSource :', state.covertSource)
       }
     },
     covertHeaders (state) {
@@ -103,6 +107,7 @@ export default new Vuex.Store({
         arr.push({ id: Object.keys(state.data[0])[i] })
       }
       state.covertHeaders = arr
+      console.log('headers :', state.covertHeaders)
     },
     edit (state, payload) {
       console.log('payload :-> ', payload)
@@ -130,7 +135,7 @@ export default new Vuex.Store({
       console.log(state.covertSource[index])
       state.covertSource.splice(index, 1)
     },
-    downloadFunction (state) {
+    async downloadFunction (state) {
       var arr = []
       var count = 0
       while (count < state.covertSource.length) {
@@ -150,7 +155,8 @@ export default new Vuex.Store({
         arr.push(cur)
         count++
       }
-      state.totalExcel = arr
+      state.totalExcel = await arr
+      console.log('state.totalExcel :', state.totalExcel)
       getCSV(state.totalExcel)
     },
     barcodeDataMatch (state, payload) {
@@ -170,6 +176,11 @@ export default new Vuex.Store({
           state.state = false
         }
       }
+    },
+    updatePic (state, payload) {
+      let index = state.covertSource.findIndex(i => i.id2 === payload.id)
+      state.covertSource[index].id11 = payload.image
+      console.log('vuex :', state.covertSource[index])
     }
   },
   strict: process.env.NODE_ENV !== 'production'

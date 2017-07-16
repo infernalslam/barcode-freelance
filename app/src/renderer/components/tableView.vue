@@ -73,25 +73,28 @@
   <br>
 
   <!-- modal -->
-      <div  class="modal" :class=" {'is-active' : show} ">
+      <div  class="modal" :class=" {'is-active' : show} " :id="editData.id2">
       <div class="modal-background"></div>
       <div class="modal-card">
         <header class="modal-card-head">
           <p class="modal-card-title">ข้อมูลสินค้า</p>
           <button class="delete" @click="show = false"></button>
         </header>
-        <section class="modal-card-body" id="print">
+        <section class="modal-card-body">
           <div class="content">
 
             <h4 class="title-text">รูปภาพ</h4>
             <div class="columns">
               <div class="column is-12">
-                <div v-if="image !== '' && editData.id11 === '' ">
+                <!-- <div v-if="image !== '' && editData.id11 === '' ">
                   <img :src="image" /> <br>
                 </div>
                 <div v-if="editData !== '' ">
                   <img :src="editData.id11" /> <br>
-                </div>
+                </div> -->
+                <img :src="image" v-if="image === '' " />
+                <img :src="editData.id11" v-if=" editData.id11 !== '' " />
+                <br>
                 <input type="file" @change="upload">
               </div>
             </div>
@@ -203,7 +206,7 @@
         </section>
         <footer class="modal-card-foot">
           <a class="button is-success" @click="addEdit(editData)">ยืนยัน</a>
-          <a class="button is-info" @click="print()">พิมพ์รายงาน</a>
+          <a class="button is-info" @click="print(editData.id2)">พิมพ์รายงาน</a>
           <a class="button" @click="show = false">ยกเลิก</a>
 
         </footer>
@@ -380,7 +383,8 @@ export default {
       'covertHeaders',
       'addNewDataVuex',
       'delTableData',
-      'downloadFunction'
+      'downloadFunction',
+      'updatePic'
     ]),
     edit (src) {
       this.editData = src
@@ -389,7 +393,6 @@ export default {
       console.log(src)
     },
     addEdit (editData) {
-      editData.id11 = this.image
       this.$store.dispatch('edit', editData)
       this.editData = {}
       this.image = ''
@@ -419,6 +422,7 @@ export default {
       this.$store.dispatch('downloadFunction')
     },
     upload (e) {
+      console.log('this id : ', this.editData.id2) // global
       var files = e.target.files || e.dataTransfer.files
       console.log('file - ', files)
       if (!files.length) return
@@ -436,8 +440,11 @@ export default {
       var vm = this
       reader.onload = (e) => {
         vm.image = e.target.result
-        // working savw image
-        // console.log('image source -> ', vm.image)
+        let data = {
+          image: vm.image,
+          id: this.editData.id2
+        }
+        this.$store.dispatch('updatePic', data)
       }
       reader.readAsDataURL(files)
     }
