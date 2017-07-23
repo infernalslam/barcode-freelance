@@ -16,7 +16,7 @@
 
 <div class="columns">
   <div class="column is-1"><a class="button is-success" @click="add  = true">เพิ่มข้อมูล</a></div>
-  <div class="column is-2"><a class="button is-info" @click="download()">ดาวน์โหลดข้อมูล</a></div>
+  <div class="column is-2"><a class="button is-info" @click="download()">บันทึกข้อมูล</a></div>
   <div class="column is-6"></div>
   <div class="column is-3">
     <div class="field has-addons">
@@ -39,9 +39,9 @@
       <!-- <th v-for="h in covertHeaders">  {{ h.id }} </th> -->
       <th>ศูนย์ต้นทุน</th>
       <th>เลขที่สินค้าคงคลัง</th>
-      <th>สินทรัพย์</th>
+      <th>เลขสินทรัพย์</th>
       <th>คำอธิบายของสินทรัพย์</th>
-      <th>เลขที่ผลิตภัณฑ์</th>
+      <th>หมายเลขครุภัณฑ์</th>
       <th>วิธีการที่ได้มา</th>
       <th>จำนวน</th>
       <!-- <th>รูปภาพ</th> -->
@@ -62,7 +62,7 @@
       <!-- <td>{{ src.id9 }}</td> -->
       <td>{{ src.id10 }}</td>
       <!-- <td>{{ src.id11 }}</td> -->
-      <td><a class="button is-info" @click="edit(src)">แก้ไขข้อมูล</a></td>
+      <td><a class="button is-info" @click="edit(src.id2)">แก้ไขข้อมูล</a></td>
       <td><a class="button is-danger" @click="del(src)">ลบ</a></td>
     </tr>
   </tbody>
@@ -71,7 +71,7 @@
   <br>
 
   <!-- modal -->
-      <div  class="modal" :class=" {'is-active' : show} " :id="editData.id2">
+      <div  class="modal" :class=" {'is-active' : show} ">
       <div class="modal-background"></div>
       <div class="modal-card">
         <header class="modal-card-head">
@@ -90,8 +90,8 @@
                 <div v-if="editData !== '' ">
                   <img :src="editData.id11" /> <br>
                 </div> -->
-                <img :src="image" v-if="image === '' " />
-                <img :src="editData.id11" v-if=" editData.id11 !== '' " />
+                <img :src="image" v-if="image === '' " width="200" height="300"/>
+                <img :src="editData.id11" v-if=" editData.id11 !== '' " width="200" height="300"/>
                 <br>
                 <input type="file" @change="upload">
               </div>
@@ -183,10 +183,23 @@
               </div>
               <div class="column">
                 <div class="field">
-                    <label class="label">จำนวน</label>
+                    <label class="label">จำนวนทั้งหมด</label>
                     <p class="control">
                       <input class="input is-success" type="text" v-model="editData.id10" />
                     </p>
+                  </div>
+              </div>
+              <div class="column">
+                <div class="field">
+                    <label class="label">หน่วย</label>
+                    <div class="select is-success">
+                      <!-- <input class="input is-success" type="text" v-model="editData.id13" /> -->
+                      <select v-model="editData.id13">
+                        <option value="ชุด">ชุด</option>
+                        <option value="ชิ้น">ชิ้น</option>
+                        <option value="เครื่อง">เครื่อง</option>
+                      </select>
+                    </div>
                   </div>
               </div>
             </div>
@@ -364,7 +377,6 @@ export default {
       sourceData: [],
       show: false,
       editData: {},
-      place: {},
       add: false,
       addNewData: {},
       image: '',
@@ -391,10 +403,10 @@ export default {
       }
     },
     edit (src) {
-      this.editData = src
-      this.place = src
+      this.editData = this.covertSource.filter(i => i.id2 === src)[0]
+      // this.editData = this.editData[0]
       this.show = true
-      console.log(src)
+      console.log(this.editData)
     },
     addEdit (editData) {
       this.$store.dispatch('edit', editData)
@@ -434,11 +446,35 @@ export default {
       if (!files.length) return
       this.createImg(files[0])
     },
-    print () {
-      // console.log('test')
-      var divContents = document.getElementById('print')
-      //
-      window.print(divContents)
+    print (id) {
+      // var content
+      // var content = document.getElementById(id)
+      // console.log(content)
+      // console.log(document.body)
+      // var printWindow = window.open('', '', 'height=400, width=1050,scrollbars=1')
+      // if(content.outerHTML) content = content.outerHTML
+      // var x = document.body
+      // document.body = content
+      // console.log(content)
+      // var frame = document.createElement('div')
+      // frame.innerHTML = content
+      // console.log(content)
+      // console.log(frame.innerHTML)
+      // var res = document.body.innerHTML
+      // var res = document.body
+      // var pr = document.getElementById(id).innerHTML
+      // document.body.innerHTML = content
+      // document.body.innerHTML += content
+      // console.log('before :', document.body.innerHTML)
+      // console.log(typeof content)
+      // document.body = content
+      window.print()
+      this.show = false
+      // document.body = x
+      // document.body.innerHTML = res
+      // console.log('after :', document.body.innerHTML)
+      // window.close()
+      // document.body.innerHTML = res
     },
     createImg (files) {
       var image = new Image()
@@ -478,5 +514,19 @@ export default {
 .title-text {
   border-bottom: solid 2px #4ECD00;
   padding-bottom: 6px;
+}
+
+@page {
+  size: A4;
+  margin: 0;
+  page-break-after: always;
+}
+@media print {
+    body img {
+       width: 35%;
+    }
+    .modal-card-foot {
+      display: none;
+    }
 }
 </style>

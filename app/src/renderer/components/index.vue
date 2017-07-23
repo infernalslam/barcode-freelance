@@ -4,7 +4,7 @@
       <div class="hero-body">
         <div class="container">
           <div class="container has-text-centered">
-            <div class="break"><h1 class="title title-text"> ระบบจัดการออเดอร์ </h1></div>
+            <div class="break"><h1 class="title title-text"> ระบบบริหารครุภัณฑ์ </h1></div>
             <br>
           </div>
           <div class="columns">
@@ -14,7 +14,7 @@
                   <div class="card-detail">
                     <img src="../../../../static/file.jpg" width="178.56px" height="160px">
                     <h1 style="color: #000;"><b>กรอกข้อมูล</b></h1>
-                    <b>กรอกข้อมูลเเละอัปเดตข้อมูล</b>
+                    <b>กรอกข้อมูลเเละอัปเดตข้อมูลครุภัณฑ์</b>
                     <br>
                     <router-link to="/form"  class="button is-danger" ><b>เลือก</b></router-link>
                   </div>
@@ -23,8 +23,8 @@
                 <div class="card">
                   <div class="card-detail">
                     <img src="../../../../static/logo.png" width="178.56px" height="160px">
-                    <h3 class="title" style="color: #000;"><b>เช็คสินค้า</b></h3>
-                    <b>เช็คสินค้า</b>
+                    <h3 class="title" style="color: #000;"><b>เช็คคลังสินค้าครุภัณฑ์</b></h3>
+                    <b>เช็คสินค้าครุภัณฑ์</b>
                     <br>
                     <router-link to="/check"  class="button is-danger" ><b>เลือก</b></router-link>
                   </div>

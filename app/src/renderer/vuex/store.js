@@ -69,8 +69,8 @@ export default new Vuex.Store({
     }
   },
   mutations: {
-    saveData (state, payload) {
-      state.data = JSON.parse(payload)
+    async saveData (state, payload) {
+      state.data = await JSON.parse(payload)
       console.log(state.data)
     },
     async covertSource (state) {
@@ -83,15 +83,17 @@ export default new Vuex.Store({
           if (j <= multple) {
             if (Object.keys(state.data[i])[j] === 'ศูนย์ต้นทุน') arr.id1 = state.data[i]['ศูนย์ต้นทุน']
             else if (Object.keys(state.data[i])[j] === 'เลขที่สินค้าคงคลัง') arr.id2 = state.data[i]['เลขที่สินค้าคงคลัง']
-            else if (Object.keys(state.data[i])[j] === 'สินทรัพย์') arr.id3 = state.data[i]['สินทรัพย์']
+            else if (Object.keys(state.data[i])[j] === 'เลขสินทรัพย์') arr.id3 = state.data[i]['เลขสินทรัพย์']
             else if (Object.keys(state.data[i])[j] === 'คำอธิบายของสินทรัพย์') arr.id4 = state.data[i]['คำอธิบายของสินทรัพย์']
-            else if (Object.keys(state.data[i])[j] === 'เลขที่ผลิตภัณฑ์') arr.id5 = state.data[i]['เลขที่ผลิตภัณฑ์']
+            else if (Object.keys(state.data[i])[j] === 'หมายเลขครุภัณฑ์') arr.id5 = state.data[i]['หมายเลขครุภัณฑ์']
             else if (Object.keys(state.data[i])[j] === 'วันที่โอนเป็นทุน') arr.id6 = state.data[i]['วันที่โอนเป็นทุน']
             else if (Object.keys(state.data[i])[j] === 'มูลค่าที่ได้มา') arr.id7 = state.data[i]['มูลค่าที่ได้มา']
             else if (Object.keys(state.data[i])[j] === 'ค่าเสื่อมสะสม') arr.id8 = state.data[i]['ค่าเสื่อมสะสม']
             else if (Object.keys(state.data[i])[j] === 'วิธีการที่ได้มา') arr.id9 = state.data[i]['วิธีการที่ได้มา']
             else if (Object.keys(state.data[i])[j] === 'จำนวน') arr.id10 = state.data[i]['จำนวน']
             else if (Object.keys(state.data[i])[j] === 'รูปภาพ') arr.id11 = state.data[i]['รูปภาพ']
+            else if (Object.keys(state.data[i])[j] === 'จำนวนทั้งหมด') arr.id12 = state.data[i]['จำนวนทั้งหมด']
+            else if (Object.keys(state.data[i])[j] === 'หน่วย') arr.id13 = state.data[i]['หน่วย']
           }
         }
         source.push(arr)
@@ -119,13 +121,17 @@ export default new Vuex.Store({
       let data = {
         id1: payload['ศูนย์ต้นทุน'],
         id2: payload['เลขที่สินค้าคงคลัง'],
-        id3: payload['สินทรัพย์'],
+        id3: payload['เลขสินทรัพย์'],
         id4: payload['คำอธิบายของสินทรัพย์'],
-        id5: payload['เลขที่ผลิตภัณฑ์'],
+        id5: payload['หมายเลขครุภัณฑ์'],
         id6: payload['วันที่โอนเป็นทุน'],
         id7: payload['มูลค่าที่ได้มา'],
         id8: payload['ค่าเสื่อมสะสม'],
-        id9: payload['วิธีการที่ได้มา']
+        id9: payload['วิธีการที่ได้มา'],
+        id10: payload['จำนวน'],
+        id11: payload['รูปภาพ'],
+        id12: payload['จำนวนทั้งหมด'],
+        id13: payload['หน่วย']
       }
       console.log('payload ', data)
       state.covertSource.push(data)
@@ -142,15 +148,17 @@ export default new Vuex.Store({
         let cur = {
           'ศูนย์ต้นทุน': state.covertSource[count].id1,
           'เลขที่สินค้าคงคลัง': state.covertSource[count].id2,
-          'สินทรัพย์': state.covertSource[count].id3,
+          'เลขสินทรัพย์': state.covertSource[count].id3,
           'คำอธิบายของสินทรัพย์': state.covertSource[count].id4,
-          'เลขที่ผลิตภัณฑ์': state.covertSource[count].id5,
+          'หมายเลขครุภัณฑ์': state.covertSource[count].id5,
           'วันที่โอนเป็นทุน': state.covertSource[count].id6,
           'มูลค่าที่ได้มา': state.covertSource[count].id7,
           'ค่าเสื่อมสะสม': state.covertSource[count].id8,
           'วิธีการที่ได้มา': state.covertSource[count].id9,
           'จำนวน': state.covertSource[count].id10,
-          'รูปภาพ': state.covertSource[count].id11
+          'รูปภาพ': state.covertSource[count].id11,
+          'จำนวนทั้งหมด': state.covertSource[count].id12,
+          'หน่วย': state.covertSource[count].id13
         }
         arr.push(cur)
         count++

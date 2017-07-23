@@ -6,7 +6,8 @@
           <div class="container">
             <div class="nav-right nav-menu">
               <span class="nav-item">
-                <router-link to="/" class="button is-outlined"> <b>กลับไปหน้าเเรก</b></router-link> &nbsp&nbsp
+                <!-- <router-link to="/" class="button is-outlined"> <b>กลับไปหน้าเเรก</b></router-link> &nbsp&nbsp -->
+                <button class="button is-outlined" @click="back()" >หน้าเเรก</button> &nbsp&nbsp
 
                 <div class="file-input-wrapper">
                   <label class="file-input-button">อัปเดตฐานข้อมูล <input type="file" @change="onFileChange" /> </label>
@@ -23,6 +24,18 @@
         </div>
       </div>
     </section>
+
+    <div class="modal" :class=" {'is-active' : confirm} ">
+      <div class="modal-background"></div>
+      <div class="modal-content">
+        <h3 style="color: white;" >คุณต้องการออกจากหน้านี้หรือไม่</h3> <br>
+        <div class="block">
+          <router-link to="/"><a class="button is-success">ยืนยัน</a></router-link>
+          <a class="button is-danger" @click=" confirm = false ">ยกเลิก</a>
+        </div>
+      </div>
+    </div>
+
   </div>
 </template>
 
@@ -39,7 +52,8 @@ export default {
     return {
       data: '',
       state: false,
-      loading: false
+      loading: false,
+      confirm: false
     }
   },
   mounted () {
@@ -59,10 +73,14 @@ export default {
         setTimeout(() => {
           vm.state = true
           vm.loading = false
-        }, 5000)
+        }, 2000)
         // console.log('this.data : ', vm.data)
       }
       reader.readAsText(file)
+    },
+    back () {
+      console.log('test')
+      this.confirm = true
     },
     CSV2JSON (csv) {
       var array = this.CSVToArray(csv)
