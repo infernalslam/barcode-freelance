@@ -60,6 +60,7 @@
     "webpack-dev-server": "^2.3.0"
   },
   "dependencies": {
-    "buefy": "^0.3.2"
+    "buefy": "^0.3.2",
+    "print.js": "^1.0.18"
   }
 }
