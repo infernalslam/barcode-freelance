@@ -1,19 +1,5 @@
 <template lang="html">
 <div>
-
-<!-- <a class="button is-success" @click="add  = true">เพิ่มข้อมูล</a>
-<a class="button is-info" @click="download()">ดาวน์โหลดข้อมูล</a>
-<div class="field has-addons">
-  <p class="control">
-    <input class="input" type="text" placeholder="search">
-  </p>
-  <p class="control">
-    <a class="button is-info">
-      Search
-    </a>
-  </p>
-</div> -->
-
 <div class="columns">
   <div class="column is-1"><a class="button is-success" @click="add  = true">เพิ่มข้อมูล</a></div>
   <div class="column is-2"><a class="button is-info" @click="download()">บันทึกข้อมูล</a></div>
@@ -71,20 +57,20 @@
   <br>
 
   <!-- modal -->
-      <div  class="modal" :class=" {'is-active' : show} " :id="editData.id2">
+      <div  class="modal" :class=" {'is-active' : show} ">
       <div class="modal-background"></div>
       <div class="modal-card">
         <header class="modal-card-head">
           <p class="modal-card-title">ข้อมูลสินค้า</p>
           <button class="delete" @click="clear()"></button>
         </header>
-        <section class="modal-card-body">
+        <section class="modal-card-body" id="printJS-form">
           <div class="content">
 
             <h4 class="title-text">รูปภาพ</h4>
             <div class="columns">
               <div class="column is-12">
-                <img :src="image" v-if="image === '' " width="200" height="300"/>
+                <img :src="image" v-if="image === '' " width="200px" height="200px"/>
                 <img :src="editData.id11" v-if=" editData.id11 !== '' " width="200" height="300"/>
                 <br>
                 <input type="file" @change="upload">
@@ -352,6 +338,9 @@
 
 <script>
 /* eslint-disable */
+// import printJS from './../../../../node_modules/print.js/src/index.js'
+import printJS from './../../../../node_modules/print.js/dist/print.min.js'
+// import printJS from 'printjs'
 import { mapActions, mapGetters } from 'vuex'
 export default {
   name: 'tableView',
@@ -432,35 +421,8 @@ export default {
       this.createImg(files[0])
     },
     print (id) {
-      console.log('xxx', this.editData)
-      // var content
-      var content = document.getElementById(id)
-      console.log(content)
-      // console.log(document.body)
-      // var printWindow = window.open('', '', 'height=400, width=1050,scrollbars=1')
-      // if(content.outerHTML) content = content.outerHTML
-      // var x = document.body
-      // document.body = content
-      // console.log(content)
-      // var frame = document.createElement('div')
-      // frame.innerHTML = content
-      // console.log(content)
-      // console.log(frame.innerHTML)
-      // var res = document.body.innerHTML
-      // var res = document.body
-      // var pr = document.getElementById(id).innerHTML
-      // document.body.innerHTML = content
-      // document.body.innerHTML += content
-      // console.log('before :', document.body.innerHTML)
-      // console.log(typeof content)
-      // document.body = content
-      window.print()
+      printJS({ printable: 'printJS-form', type: 'html', header: 'รายการครุภัณฑ์' })
       this.show = false
-      // document.body = x
-      // document.body.innerHTML = res
-      // console.log('after :', document.body.innerHTML)
-      // window.close()
-      // document.body.innerHTML = res
     },
     createImg (files) {
       var image = new Image()
@@ -507,17 +469,4 @@ export default {
   padding-bottom: 6px;
 }
 
-@page {
-  size: A4;
-  margin: 0;
-  page-break-after: always;
-}
-@media print {
-    body img {
-       width: 35%;
-    }
-    .modal-card-foot {
-      display: none;
-    }
-}
 </style>
