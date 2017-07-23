@@ -30,7 +30,8 @@
       <div class="modal-content">
         <h3 style="color: white;" >คุณต้องการออกจากหน้านี้หรือไม่</h3> <br>
         <div class="block">
-          <router-link to="/"><a class="button is-success">ยืนยัน</a></router-link>
+          <!-- <router-link to="/"><a class="button is-success">ยืนยัน</a></router-link> -->
+          <a class="button is-success" @click="confirmBack()" >ยืนยัน</a>
           <a class="button is-danger" @click=" confirm = false ">ยกเลิก</a>
         </div>
       </div>
@@ -60,6 +61,9 @@ export default {
     this.state = false
   },
   methods: {
+    ...mapActions([
+      'clearActionData'
+    ]),
     onFileChange (e) {
       let vm = this
       let reader = new FileReader()
@@ -79,8 +83,11 @@ export default {
       reader.readAsText(file)
     },
     back () {
-      console.log('test')
       this.confirm = true
+    },
+    confirmBack () {
+      this.$store.dispatch('clearActionData')
+      this.$router.push({path: '/'})
     },
     CSV2JSON (csv) {
       var array = this.CSVToArray(csv)
@@ -98,23 +105,23 @@ export default {
     },
     CSVToArray (strData, strDelimiter) {
       strDelimiter = (strDelimiter || ",");
-      var objPattern = new RegExp(("(\\" + strDelimiter + "|\\r?\\n|\\r|^)" + "(?:\"([^\"]*(?:\"\"[^\"]*)*)\"|" + "([^\"\\" + strDelimiter + "\\r\\n]*))"), "gi");
+      var objPattern = new RegExp(("(\\" + strDelimiter + "|\\r?\\n|\\r|^)" + "(?:\"([^\"]*(?:\"\"[^\"]*)*)\"|" + "([^\"\\" + strDelimiter + "\\r\\n]*))"), "gi")
       var arrData = [[]]
       var arrMatches = null
       while (arrMatches = objPattern.exec(strData)) {
-          var strMatchedDelimiter = arrMatches[1];
+          var strMatchedDelimiter = arrMatches[1]
           if (strMatchedDelimiter.length && (strMatchedDelimiter != strDelimiter)) {
               arrData.push([]);
           }
           if (arrMatches[2]) {
               var strMatchedValue = arrMatches[2].replace(
-              new RegExp("\"\"", "g"), "\"");
+              new RegExp("\"\"", "g"), "\"")
           } else {
-              var strMatchedValue = arrMatches[3];
+              var strMatchedValue = arrMatches[3]
           }
-          arrData[arrData.length - 1].push(strMatchedValue);
+          arrData[arrData.length - 1].push(strMatchedValue)
       }
-      return (arrData);
+      return (arrData)
     }
   }
 }

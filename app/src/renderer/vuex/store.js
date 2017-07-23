@@ -66,6 +66,9 @@ export default new Vuex.Store({
     },
     updatePic (context, payload) {
       context.commit('updatePic', payload)
+    },
+    clearActionData (context) {
+      context.commit('clearActionData')
     }
   },
   mutations: {
@@ -201,6 +204,14 @@ export default new Vuex.Store({
       let index = state.covertSource.findIndex(i => i.id2 === payload.id)
       state.covertSource[index].id11 = payload.image
       console.log('vuex :', state.covertSource[index])
+    },
+    clearActionData (state) {
+      state.data = ''
+      state.covertSource = []
+      state.covertHeaders = []
+      state.totalExcel = []
+      state.barcodeDataMatch = []
+      state.state = null
     }
   },
   strict: process.env.NODE_ENV !== 'production'

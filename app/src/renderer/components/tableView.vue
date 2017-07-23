@@ -71,12 +71,12 @@
   <br>
 
   <!-- modal -->
-      <div  class="modal" :class=" {'is-active' : show} ">
+      <div  class="modal" :class=" {'is-active' : show} " :id="editData.id2">
       <div class="modal-background"></div>
       <div class="modal-card">
         <header class="modal-card-head">
           <p class="modal-card-title">ข้อมูลสินค้า</p>
-          <button class="delete" @click="show = false"></button>
+          <button class="delete" @click="clear()"></button>
         </header>
         <section class="modal-card-body">
           <div class="content">
@@ -84,12 +84,6 @@
             <h4 class="title-text">รูปภาพ</h4>
             <div class="columns">
               <div class="column is-12">
-                <!-- <div v-if="image !== '' && editData.id11 === '' ">
-                  <img :src="image" /> <br>
-                </div>
-                <div v-if="editData !== '' ">
-                  <img :src="editData.id11" /> <br>
-                </div> -->
                 <img :src="image" v-if="image === '' " width="200" height="300"/>
                 <img :src="editData.id11" v-if=" editData.id11 !== '' " width="200" height="300"/>
                 <br>
@@ -193,7 +187,6 @@
                 <div class="field">
                     <label class="label">หน่วย</label>
                     <div class="select is-success">
-                      <!-- <input class="input is-success" type="text" v-model="editData.id13" /> -->
                       <select v-model="editData.id13">
                         <option value="ชุด">ชุด</option>
                         <option value="ชิ้น">ชิ้น</option>
@@ -203,16 +196,6 @@
                   </div>
               </div>
             </div>
-            <!-- <h4 class="title-text">รายละเอียดสินค้า</h4> -->
-            <!-- <input type="text" :placeholder="place.id1" v-model="editData.id1"> <br>
-            <input type="text" :placeholder="place.id2" v-model="editData.id2"> <br>
-            <input type="text" :placeholder="place.id3" v-model="editData.id3"> <br>
-            <input type="text" :placeholder="place.id4" v-model="editData.id4"> <br>
-            <input type="text" :placeholder="place.id5" v-model="editData.id5"> <br>
-            <input type="text" :placeholder="place.id6" v-model="editData.id6"> <br>
-            <input type="text" :placeholder="place.id7" v-model="editData.id7"> <br>
-            <input type="text" :placeholder="place.id8" v-model="editData.id8"> <br>
-            <input type="text" :placeholder="place.id9" v-model="editData.id9"> <br> -->
           </div>
         </section>
         <footer class="modal-card-foot">
@@ -403,6 +386,8 @@ export default {
       }
     },
     edit (src) {
+      this.editData = {}
+      console.log('after', this.editData)
       this.editData = this.covertSource.filter(i => i.id2 === src)[0]
       // this.editData = this.editData[0]
       this.show = true
@@ -447,9 +432,10 @@ export default {
       this.createImg(files[0])
     },
     print (id) {
+      console.log('xxx', this.editData)
       // var content
-      // var content = document.getElementById(id)
-      // console.log(content)
+      var content = document.getElementById(id)
+      console.log(content)
       // console.log(document.body)
       // var printWindow = window.open('', '', 'height=400, width=1050,scrollbars=1')
       // if(content.outerHTML) content = content.outerHTML
@@ -489,6 +475,11 @@ export default {
         this.$store.dispatch('updatePic', data)
       }
       reader.readAsDataURL(files)
+    },
+    clear () {
+      this.editData = {}
+      this.show = false
+      console.log(this.editData)
     }
   },
   computed: {
@@ -504,7 +495,7 @@ export default {
     // }
   },
   async mounted () {
-    this.$store.dispatch('covertHeaders')
+    let y = await this.$store.dispatch('covertHeaders')
     let x = await this.$store.dispatch('covertSource')
   }
 }
