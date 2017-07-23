@@ -500,8 +500,8 @@ export default {
 
 <style lang="css">
 .title-text {
-  border-bottom: solid 2px #4ECD00;
-  padding-bottom: 3px;
+  border-bottom: solid 1px #4ECD00;
+  padding-bottom: 2px;
 }
 
 /*@page {
