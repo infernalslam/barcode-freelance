@@ -70,6 +70,9 @@ export default new Vuex.Store({
     clearActionData (context) {
       context.commit('clearActionData')
     }
+    // addNewPic (context, payload) {
+    //   context.commit('addNewPic', payload)
+    // }
   },
   mutations: {
     async saveData (state, payload) {
@@ -205,6 +208,9 @@ export default new Vuex.Store({
       state.covertSource[index].id11 = payload.image
       console.log('vuex :', state.covertSource[index])
     },
+    // addNewPic (state, payload) {
+    //   let index = state.covertSource.findIndex(i => i.id2)
+    // },
     clearActionData (state) {
       state.data = ''
       state.covertSource = []

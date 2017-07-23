@@ -66,7 +66,7 @@
         </header>
         <section class="modal-card-body" id="printJS-form">
           <div class="content">
-
+            <h3>รายการครุภัณฑ์</h3> <br>
             <h4 class="title-text">รูปภาพ</h4>
             <div class="columns">
               <div class="column is-12">
@@ -165,7 +165,7 @@
                 <div class="field">
                     <label class="label">จำนวนทั้งหมด</label>
                     <p class="control">
-                      <input class="input is-success" type="text" v-model="editData.id10" />
+                      <input class="input is-success" type="text" v-model="editData.id12" />
                     </p>
                   </div>
               </div>
@@ -210,9 +210,9 @@
         <h4 class="title-text">รูปภาพ</h4>
         <div class="columns">
           <div class="column is-12">
-            <img :src="image" v-if="image === '' " />
-            <img :src="addNewData.id11" v-if=" addNewData.id11 !== '' " />
-            <input type="file" @change="upload">
+            <!-- <img :src="image" v-if="image === '' " /> -->
+            <img :src="addNewData.id11" v-if=" addNewData.id11 !== '' "  width="200px" height="200px"/> <br>
+            <input type="file" @change="addUpload">
           </div>
         </div>
 
@@ -303,10 +303,22 @@
           </div>
           <div class="column">
             <div class="field">
-                <label class="label">จำนวน</label>
+                <label class="label">จำนวนทั้งหมด</label>
                 <p class="control">
-                  <input class="input is-success" type="text" v-model="addNewData.id10" />
+                  <input class="input is-success" type="text" v-model="addNewData.id12" />
                 </p>
+              </div>
+          </div>
+          <div class="column">
+            <div class="field">
+                <label class="label">หน่วย</label>
+                <div class="select is-success">
+                  <select v-model="addNewData.id13">
+                    <option value="ชุด">ชุด</option>
+                    <option value="ชิ้น">ชิ้น</option>
+                    <option value="เครื่อง">เครื่อง</option>
+                  </select>
+                </div>
               </div>
           </div>
         </div>
@@ -391,15 +403,17 @@ export default {
       let data = {
         'ศูนย์ต้นทุน': this.addNewData.id1,
         'เลขที่สินค้าคงคลัง': this.addNewData.id2,
-        'สินทรัพย์': this.addNewData.id3,
+        'เลขสินทรัพย์': this.addNewData.id3,
         'คำอธิบายของสินทรัพย์': this.addNewData.id4,
-        'เลขที่ผลิตภัณฑ์': this.addNewData.id5,
+        'หมายเลขครุภัณฑ์': this.addNewData.id5,
         'วันที่โอนเป็นทุน': this.addNewData.id6,
         'มูลค่าที่ได้มา': this.addNewData.id7,
         'ค่าเสื่อมสะสม': this.addNewData.id8,
         'วิธีการที่ได้มา': this.addNewData.id9,
-        'จำนวน': this.addNewData.id10,
-        'รูปภาพ': this.addNewData.id11
+        'จำนวน': 0,
+        'รูปภาพ': this.addNewData.id11,
+        'จำนวนทั้งหมด': this.addNewData.id12,
+        'หน่วย': this.addNewData.id13
       }
       console.log(data)
       this.$store.dispatch('addNewDataVuex', data)
@@ -419,9 +433,30 @@ export default {
       if (!files.length) return
       this.createImg(files[0])
     },
+    addUpload (e) {
+      console.log('addUpload')
+      var files = e.target.files || e.dataTransfer.files
+      if (!files.length) return
+      this.addImage(files[0])
+    },
+    addImage (files) {
+      var image = new Image()
+      var reader = new FileReader()
+      var vm = this
+      reader.onload = (e) => {
+        vm.addNewData.id11 = e.target.result
+        console.log(vm.addNewData.id11)
+        // let data = {
+        //   image: vm.image,
+        //   id: this.addNewData.id2
+        // }
+        // this.$store.dispatch('updatePic', data)
+      }
+      reader.readAsDataURL(files)
+    },
     print (id) {
       // printJS('printJS-form', 'html')
-      printJS({ printable: 'printJS-form', type: 'html', header: 'รายการครุภัณฑ์' })
+      printJS({ printable: 'printJS-form', type: 'html', font_size: '12pt' })
       this.show = false
     },
     createImg (files) {
@@ -466,7 +501,7 @@ export default {
 <style lang="css">
 .title-text {
   border-bottom: solid 2px #4ECD00;
-  padding-bottom: 6px;
+  padding-bottom: 3px;
 }
 
 /*@page {
