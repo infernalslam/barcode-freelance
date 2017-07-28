@@ -132,22 +132,22 @@ if (process.env.NODE_ENV !== 'production') {
 /**
  * Adjust rendererConfig for production settings
  */
-if (process.env.NODE_ENV === 'production') {
-  rendererConfig.devtool = ''
-
-  rendererConfig.plugins.push(
-    new webpack.DefinePlugin({
-      'process.env.NODE_ENV': '"production"'
-    }),
-    new webpack.LoaderOptionsPlugin({
-      minimize: true
-    }),
-    new webpack.optimize.UglifyJsPlugin({
-      compress: {
-        warnings: false
-      }
-    })
-  )
-}
+// if (process.env.NODE_ENV === 'production') {
+//   rendererConfig.devtool = ''
+//
+//   rendererConfig.plugins.push(
+//     new webpack.DefinePlugin({
+//       'process.env.NODE_ENV': '"production"'
+//     }),
+//     new webpack.LoaderOptionsPlugin({
+//       minimize: true
+//     }),
+//     new webpack.optimize.UglifyJsPlugin({
+//       compress: {
+//         warnings: false
+//       }
+//     })
+//   )
+// }
 
 module.exports = rendererConfig

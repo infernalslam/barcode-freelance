@@ -351,7 +351,7 @@
 <script>
 /* eslint-disable */
 // node_modules/print.js/src/index.js
-import printJS from './../../../../node_modules/print.js/dist/print.min.js'
+import printJS from './../../../../node_modules/print.js/src/index.js'
 import { mapActions, mapGetters } from 'vuex'
 export default {
   name: 'tableView',
