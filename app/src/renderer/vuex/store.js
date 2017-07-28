@@ -161,17 +161,17 @@ export default new Vuex.Store({
           'มูลค่าที่ได้มา': state.covertSource[count].id7,
           'ค่าเสื่อมสะสม': state.covertSource[count].id8,
           'วิธีการที่ได้มา': state.covertSource[count].id9,
-          'จำนวน': state.covertSource[count].id10,
-          'รูปภาพ': state.covertSource[count].id11,
           'จำนวนทั้งหมด': state.covertSource[count].id12,
-          'หน่วย': state.covertSource[count].id13
+          'จำนวน': state.covertSource[count].id10,
+          'หน่วย': state.covertSource[count].id13,
+          'รูปภาพ': state.covertSource[count].id11
         }
         arr.push(cur)
         count++
       }
       state.totalExcel = await arr
       var arrData = await typeof state.totalExcel !== 'object' ? JSON.parse(state.totalExcel) : state.totalExcel
-      var CSV = 'ศูนย์ต้นทุน,เลขที่สินค้าคงคลัง,สินทรัพย์,คำอธิบายของสินทรัพย์,เลขที่ผลิตภัณฑ์,วันที่โอนเป็นทุน,มูลค่าที่ได้มา,ค่าเสื่อมสะสม,วิธีการที่ได้มา,จำนวน,รูปภาพ' + '\r\n'
+      var CSV = 'ศูนย์ต้นทุน,เลขที่สินค้าคงคลัง,เลขสินทรัพย์,คำอธิบายของสินทรัพย์,หมายเลขครุภัณฑ์,วันที่โอนเป็นทุน,มูลค่าที่ได้มา,ค่าเสื่อมสะสม,วิธีการที่ได้มา,จำนวนทั้งหมด,จำนวน,หน่วย,รูปภาพ' + '\r\n'
       for (var i = 0; i < arrData.length; i++) {
         var row = ''
         for (var index in arrData[i]) {
@@ -182,8 +182,10 @@ export default new Vuex.Store({
       }
       var csvContent = "data:text/csv;charset=utf-8,"
       csvContent += CSV
+      console.log(csvContent)
       var encodedUri = await encodeURI(csvContent)
       window.open(encodedUri)
+      // window.close()
     },
     barcodeDataMatch (state, payload) {
       var filter = state.covertSource.findIndex(i => i.id2 === payload)

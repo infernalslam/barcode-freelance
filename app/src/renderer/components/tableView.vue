@@ -394,6 +394,7 @@ export default {
       console.log(this.editData)
     },
     addEdit (editData) {
+      console.log('addEdit : ', editData)
       this.$store.dispatch('edit', editData)
       this.editData = {}
       this.image = ''
